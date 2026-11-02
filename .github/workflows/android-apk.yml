@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - ".github/workflows/android-apk.yml"
+      - "logo.png"
 
 permissions:
   contents: read
@@ -18,13 +19,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java 17
+      - name: Set up Java
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
 
-      - name: Accept Android SDK licenses and install packages
+      - name: Accept Android SDK licenses
         shell: bash
         run: |
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
@@ -50,7 +51,6 @@ jobs:
                   gradlePluginPortal()
               }
           }
-
           dependencyResolutionManagement {
               repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
               repositories {
@@ -58,7 +58,6 @@ jobs:
                   mavenCentral()
               }
           }
-
           rootProject.name = "BaccalaureatePlatform"
           include(":app")
           EOF
@@ -89,8 +88,8 @@ jobs:
                   applicationId 'com.saher.baccalaureate'
                   minSdk 23
                   targetSdk 35
-                  versionCode 1
-                  versionName '1.0'
+                  versionCode 2
+                  versionName '1.1'
               }
           }
 
@@ -103,37 +102,31 @@ jobs:
 
           cat > app/src/main/AndroidManifest.xml <<'EOF'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-              <uses-permission android:name="android.permission.INTERNET" />
-              <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+              <uses-permission android:name="android.permission.INTERNET"/>
+              <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
               <application
                   android:allowBackup="true"
-                  android:label="منصة البكالوريا التعليمية"
+                  android:label="منصة البكالوريا"
                   android:usesCleartextTraffic="false"
                   android:theme="@style/AppTheme">
 
                   <activity
                       android:name=".MainActivity"
                       android:exported="true">
-
                       <intent-filter>
-                          <action android:name="android.intent.action.MAIN" />
-                          <category android:name="android.intent.category.LAUNCHER" />
+                          <action android:name="android.intent.action.MAIN"/>
+                          <category android:name="android.intent.category.LAUNCHER"/>
                       </intent-filter>
-
                   </activity>
 
                   <service
                       android:name=".MyFirebaseMessagingService"
                       android:exported="false">
-
                       <intent-filter>
-                          <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                          <action android:name="com.google.firebase.MESSAGING_EVENT"/>
                       </intent-filter>
-
                   </service>
-
               </application>
           </manifest>
           EOF
@@ -142,13 +135,9 @@ jobs:
           <resources>
               <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
                   <item name="android:fontFamily">sans</item>
-                  <item name="android:colorAccent">#1976D2</item>
-                  <item name="android:windowActionModeOverlay">true</item>
-                  <item name="android:windowNoTitle">true</item>
                   <item name="android:windowFullscreen">true</item>
-                  <item name="android:windowLightStatusBar">false</item>
-                  <item name="android:navigationBarColor">#000000</item>
                   <item name="android:statusBarColor">#000000</item>
+                  <item name="android:navigationBarColor">#000000</item>
               </style>
           </resources>
           EOF
@@ -157,7 +146,10 @@ jobs:
           package com.saher.baccalaureate;
 
           import android.Manifest;
+          import android.app.Activity;
+          import android.content.Intent;
           import android.content.pm.PackageManager;
+          import android.net.Uri;
           import android.os.Build;
           import android.os.Bundle;
           import android.view.View;
@@ -166,16 +158,11 @@ jobs:
           import android.webkit.WebSettings;
           import android.webkit.WebView;
           import android.webkit.WebViewClient;
-          import android.content.Intent;
-          import android.net.Uri;
-
           import androidx.core.app.ActivityCompat;
           import androidx.core.content.ContextCompat;
-
           import com.google.firebase.messaging.FirebaseMessaging;
 
-          public class MainActivity extends android.app.Activity {
-
+          public class MainActivity extends Activity {
               private WebView webView;
 
               @Override
@@ -183,12 +170,12 @@ jobs:
                   super.onCreate(savedInstanceState);
 
                   getWindow().getDecorView().setSystemUiVisibility(
-                      View.SYSTEM_UI_FLAG_FULLSCREEN
-                      | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                      | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                      | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                      | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                      | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                      View.SYSTEM_UI_FLAG_FULLSCREEN |
+                      View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                      View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+                      View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                      View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                      View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                   );
 
                   webView = new WebView(this);
@@ -207,9 +194,7 @@ jobs:
                   webView.setWebViewClient(new WebViewClient() {
                       @Override
                       public boolean shouldOverrideUrlLoading(
-                          WebView view,
-                          WebResourceRequest request
-                      ) {
+                          WebView view, WebResourceRequest request) {
                           Uri uri = request.getUrl();
                           String host = uri.getHost();
 
@@ -220,9 +205,7 @@ jobs:
                           String scheme = uri.getScheme();
                           if ("https".equals(scheme) || "http".equals(scheme)) {
                               startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                              return true;
                           }
-
                           return true;
                       }
                   });
@@ -261,40 +244,39 @@ jobs:
           import android.app.PendingIntent;
           import android.content.Intent;
           import android.os.Build;
-
           import androidx.core.app.NotificationCompat;
           import androidx.core.app.NotificationManagerCompat;
-
           import com.google.firebase.messaging.FirebaseMessagingService;
           import com.google.firebase.messaging.RemoteMessage;
 
           public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
               private static final String CHANNEL_ID = "baccalaureate_notifications";
 
               @Override
               public void onMessageReceived(RemoteMessage remoteMessage) {
-                  String title = "منصة البكالوريا التعليمية";
+                  String title = "منصة البكالوريا";
                   String body = "لديك إشعار جديد";
 
                   if (remoteMessage.getNotification() != null) {
-                      if (remoteMessage.getNotification().getTitle() != null) {
+                      if (remoteMessage.getNotification().getTitle() != null)
                           title = remoteMessage.getNotification().getTitle();
-                      }
-                      if (remoteMessage.getNotification().getBody() != null) {
+
+                      if (remoteMessage.getNotification().getBody() != null)
                           body = remoteMessage.getNotification().getBody();
-                      }
                   }
 
-                  createNotificationChannel();
+                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                      NotificationChannel channel = new NotificationChannel(
+                          CHANNEL_ID, "إشعارات المنصة",
+                          NotificationManager.IMPORTANCE_HIGH
+                      );
+                      getSystemService(NotificationManager.class)
+                          .createNotificationChannel(channel);
+                  }
 
                   Intent intent = new Intent(this, MainActivity.class);
-                  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
                   PendingIntent pendingIntent = PendingIntent.getActivity(
-                      this,
-                      0,
-                      intent,
+                      this, 0, intent,
                       PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
                   );
 
@@ -309,26 +291,8 @@ jobs:
                           .setContentIntent(pendingIntent);
 
                   NotificationManagerCompat.from(this).notify(
-                      (int) System.currentTimeMillis(),
-                      builder.build()
+                      (int) System.currentTimeMillis(), builder.build()
                   );
-              }
-
-              private void createNotificationChannel() {
-                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                      NotificationChannel channel = new NotificationChannel(
-                          CHANNEL_ID,
-                          "إشعارات المنصة",
-                          NotificationManager.IMPORTANCE_HIGH
-                      );
-
-                      NotificationManager manager =
-                          getSystemService(NotificationManager.class);
-
-                      if (manager != null) {
-                          manager.createNotificationChannel(channel);
-                      }
-                  }
               }
           }
           EOF
@@ -339,10 +303,57 @@ jobs:
         shell: bash
         run: |
           if [ -z "$GOOGLE_SERVICES_JSON" ]; then
-            echo "ERROR: GitHub secret GOOGLE_SERVICES_JSON is missing."
+            echo "ERROR: GOOGLE_SERVICES_JSON is missing"
             exit 1
           fi
           printf '%s' "$GOOGLE_SERVICES_JSON" > app/google-services.json
+
+      - name: Generate app icons
+        shell: bash
+        run: |
+          if [ ! -f logo.png ]; then
+            echo "ERROR: logo.png was not found in repository root"
+            exit 1
+          fi
+
+          python3 - <<'PY'
+          from PIL import Image
+          import os
+
+          image = Image.open("logo.png").convert("RGBA")
+          image.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
+
+          sizes = {
+              "mipmap-mdpi": 48,
+              "mipmap-hdpi": 72,
+              "mipmap-xhdpi": 96,
+              "mipmap-xxhdpi": 144,
+              "mipmap-xxxhdpi": 192,
+          }
+
+          for folder, size in sizes.items():
+              path = f"app/src/main/res/{folder}"
+              os.makedirs(path, exist_ok=True)
+              resized = image.resize((size, size), Image.Resampling.LANCZOS)
+              resized.save(f"{path}/ic_launcher.png")
+
+          print("App icons created successfully")
+          PY
+
+          cat > app/src/main/res/values/ic_launcher_background.xml <<'EOF'
+          <resources>
+              <color name="ic_launcher_background">#FFFFFF</color>
+          </resources>
+          EOF
+
+          cat > app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml <<'EOF'
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@color/ic_launcher_background"/>
+              <foreground android:drawable="@mipmap/ic_launcher"/>
+          </adaptive-icon>
+          EOF
+
+          mkdir -p app/src/main/res/mipmap-anydpi-v26
 
       - name: Build APK
         run: gradle --no-daemon assembleDebug
