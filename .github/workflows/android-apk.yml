@@ -1,4 +1,3 @@
-
 name: Build Android APK
 
 on:
@@ -36,6 +35,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
+
+      - name: Install Pillow
+        run: |
+          python3 -m pip install --quiet pillow
 
       - name: Create Android project
         shell: bash
@@ -88,8 +91,8 @@ jobs:
                   applicationId 'com.saher.baccalaureate'
                   minSdk 23
                   targetSdk 35
-                  versionCode 2
-                  versionName '1.1'
+                  versionCode 3
+                  versionName '1.2'
               }
           }
 
@@ -108,6 +111,8 @@ jobs:
               <application
                   android:allowBackup="true"
                   android:label="منصة البكالوريا"
+                  android:icon="@mipmap/ic_launcher"
+                  android:roundIcon="@mipmap/ic_launcher"
                   android:usesCleartextTraffic="false"
                   android:theme="@style/AppTheme">
 
@@ -316,12 +321,17 @@ jobs:
             exit 1
           fi
 
+          mkdir -p app/src/main/res/mipmap-mdpi
+          mkdir -p app/src/main/res/mipmap-hdpi
+          mkdir -p app/src/main/res/mipmap-xhdpi
+          mkdir -p app/src/main/res/mipmap-xxhdpi
+          mkdir -p app/src/main/res/mipmap-xxxhdpi
+
           python3 - <<'PY'
-          from PIL import Image
+          from PIL import Image, ImageOps
           import os
 
           image = Image.open("logo.png").convert("RGBA")
-          image.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
 
           sizes = {
               "mipmap-mdpi": 48,
@@ -334,26 +344,16 @@ jobs:
           for folder, size in sizes.items():
               path = f"app/src/main/res/{folder}"
               os.makedirs(path, exist_ok=True)
-              resized = image.resize((size, size), Image.Resampling.LANCZOS)
-              resized.save(f"{path}/ic_launcher.png")
+              icon = ImageOps.fit(
+                  image,
+                  (size, size),
+                  method=Image.Resampling.LANCZOS,
+                  centering=(0.5, 0.5)
+              )
+              icon.save(f"{path}/ic_launcher.png")
 
           print("App icons created successfully")
           PY
-
-          cat > app/src/main/res/values/ic_launcher_background.xml <<'EOF'
-          <resources>
-              <color name="ic_launcher_background">#FFFFFF</color>
-          </resources>
-          EOF
-
-          cat > app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml <<'EOF'
-          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-              <background android:drawable="@color/ic_launcher_background"/>
-              <foreground android:drawable="@mipmap/ic_launcher"/>
-          </adaptive-icon>
-          EOF
-
-          mkdir -p app/src/main/res/mipmap-anydpi-v26
 
       - name: Build APK
         run: gradle --no-daemon assembleDebug
@@ -364,4 +364,3 @@ jobs:
           name: platform-apk
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-          
