@@ -15,13 +15,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Accept Android SDK licenses and install packages
+        shell: bash
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMANAGER" --licenses
+          "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -32,6 +36,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p app/src/main/java/com/saher/baccalaureate
+
           cat > settings.gradle <<'EOF'
           pluginManagement {
               repositories {
@@ -93,12 +98,14 @@ jobs:
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.INTERNET" />
               <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
               <application
                   android:allowBackup="true"
                   android:label="منصة البكالوريا التعليمية"
                   android:usesCleartextTraffic="false"
                   android:theme="@android:style/Theme.Material.Light.NoActionBar"
                   android:supportsRtl="true">
+
                   <activity
                       android:name=".MainActivity"
                       android:exported="true">
@@ -107,6 +114,7 @@ jobs:
                           <category android:name="android.intent.category.LAUNCHER" />
                       </intent-filter>
                   </activity>
+
                   <service
                       android:name=".MyFirebaseMessagingService"
                       android:exported="false">
@@ -150,8 +158,11 @@ jobs:
                   );
 
                   if (Build.VERSION.SDK_INT >= 33 &&
-                      checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                      requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
+                      checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
+                      != PackageManager.PERMISSION_GRANTED) {
+                      requestPermissions(
+                          new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100
+                      );
                   }
 
                   webView = new WebView(this);
@@ -166,16 +177,22 @@ jobs:
 
                   webView.setWebViewClient(new WebViewClient() {
                       @Override
-                      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                      public boolean shouldOverrideUrlLoading(
+                          WebView view, String url
+                      ) {
                           Uri uri = Uri.parse(url);
+
                           if ("https".equals(uri.getScheme()) &&
                               "saher254.github.io".equals(uri.getHost())) {
                               return false;
                           }
-                          if ("http".equals(uri.getScheme()) || "https".equals(uri.getScheme())) {
+
+                          if ("http".equals(uri.getScheme()) ||
+                              "https".equals(uri.getScheme())) {
                               startActivity(new Intent(Intent.ACTION_VIEW, uri));
                               return true;
                           }
+
                           return true;
                       }
                   });
@@ -214,32 +231,59 @@ jobs:
 
               @Override
               public void onMessageReceived(RemoteMessage message) {
-                  String title = message.getNotification() != null && message.getNotification().getTitle() != null
-                      ? message.getNotification().getTitle() : "منصة البكالوريا التعليمية";
-                  String body = message.getNotification() != null && message.getNotification().getBody() != null
-                      ? message.getNotification().getBody() : "لديك إشعار جديد";
+                  String title = message.getNotification() != null &&
+                      message.getNotification().getTitle() != null
+                      ? message.getNotification().getTitle()
+                      : "منصة البكالوريا التعليمية";
 
-                  NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                  String body = message.getNotification() != null &&
+                      message.getNotification().getBody() != null
+                      ? message.getNotification().getBody()
+                      : "لديك إشعار جديد";
+
+                  NotificationManager manager =
+                      (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                      manager.createNotificationChannel(new NotificationChannel(
-                          CHANNEL_ID, "إشعارات المنصة", NotificationManager.IMPORTANCE_DEFAULT));
+                      manager.createNotificationChannel(
+                          new NotificationChannel(
+                              CHANNEL_ID,
+                              "إشعارات المنصة",
+                              NotificationManager.IMPORTANCE_DEFAULT
+                          )
+                      );
                   }
 
                   Intent intent = new Intent(this, MainActivity.class);
-                  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                  PendingIntent pendingIntent = PendingIntent.getActivity(
-                      this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                  intent.addFlags(
+                      Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                      Intent.FLAG_ACTIVITY_SINGLE_TOP
+                  );
 
-                  NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                  PendingIntent pendingIntent = PendingIntent.getActivity(
+                      this,
+                      0,
+                      intent,
+                      PendingIntent.FLAG_UPDATE_CURRENT |
+                      PendingIntent.FLAG_IMMUTABLE
+                  );
+
+                  NotificationCompat.Builder notification =
+                      new NotificationCompat.Builder(this, CHANNEL_ID)
                       .setSmallIcon(android.R.drawable.ic_dialog_info)
                       .setContentTitle(title)
                       .setContentText(body)
-                      .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
+                      .setStyle(
+                          new NotificationCompat.BigTextStyle().bigText(body)
+                      )
                       .setAutoCancel(true)
                       .setContentIntent(pendingIntent)
                       .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-                  manager.notify((int) System.currentTimeMillis(), notification.build());
+                  manager.notify(
+                      (int) System.currentTimeMillis(),
+                      notification.build()
+                  );
               }
           }
           EOF
@@ -252,6 +296,7 @@ jobs:
             echo "Repository secret GOOGLE_SERVICES_JSON is missing."
             exit 1
           fi
+
           printf '%s' "$GOOGLE_SERVICES_JSON" > app/google-services.json
           python3 -m json.tool app/google-services.json > /dev/null
 
