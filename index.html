@@ -422,19 +422,6 @@
     </div>
 </div>
 
-<!-- ✅ مودال التثبيت -->
-<div id="installAppModal" class="modal" style="z-index: 9999;">
-    <div class="modal-content" style="text-align: center; max-width: 380px;">
-        <div style="font-size: 60px; margin-bottom: 10px; animation: bounce 1s infinite;">🎓</div>
-        <h3 style="font-size: 24px; margin-bottom: 10px;">ثبّت التطبيق واستمتع! 🚀</h3>
-        
-        <div style="background: linear-gradient(135deg, #4f46e5, #818cf8); color: #fff; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: right;">
-            <p style="font-size: 15px; font-weight: bold; margin-bottom: 8px;">🔔 ميزة جديدة وحصرية!</p>
-            <p style="font-size: 14px; line-height: 1.7; margin: 0;">
-                لما تثبّت التطبيق، هتوصلك <b>إشعارات فورية</b> أول ما ينزل درس جديد أو امتحان أو أي حاجة جديدة! 📚<br>
-                <span style="font-size: 13px; opacity: 0.9;">مش هتفوّت أي جديد في المنصة! ✨</span>
-            </p>
-        </div>
 
         <div style="text-align: right; margin-bottom: 20px;">
             <p style="font-size: 14px; color: var(--muted); margin-bottom: 8px;"><b>ليه تثبّت التطبيق؟</b></p>
@@ -1002,19 +989,7 @@
         }, 1000);
     });
 
-    // ✅ إشعار تثبيت التطبيق (يظهر كل مرة)
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        
-        const userStr = localStorage.getItem('bakaloria_user');
-        if (!userStr) return;
-        
-        setTimeout(() => {
-            document.getElementById('installAppModal').classList.add('active');
-        }, 3000);
-    });
+
 
     document.getElementById('customInstallBtn').addEventListener('click', async () => {
         if (deferredPrompt) {
