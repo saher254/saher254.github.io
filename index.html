@@ -24,19 +24,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --accent: #4f46e5;
-            --accent-text: #ffffff; --border: #e2e8f0; --danger: #ef4444; --success: #10b981; --muted: #64748b;
+            --bg: #f8fafc; --text: #0f172a; 
+            --card: #e2e8f0; /* ✅ أبيض غامق شويه */
+            --accent: #4f46e5; --accent-text: #ffffff; --border: #cbd5e1; 
+            --danger: #ef4444; --success: #10b981; --muted: #64748b;
             --shadow: 0 10px 25px -5px rgba(0,0,0,0.05); --shadow-hover: 0 20px 30px -10px rgba(0,0,0,0.1);
         }
         body.dark {
-            --bg: #0b1120; --text: #f8fafc; --card: #1e293b; --accent: #4f46e5;
-            --accent-text: #ffffff; --border: #334155; --muted: #94a3b8; 
+            --bg: #0b1120; --text: #f8fafc; 
+            --card: #1e293b; 
+            --accent: #4f46e5; --accent-text: #ffffff; --border: #334155; 
+            --muted: #94a3b8; 
             --shadow: 0 10px 25px -5px rgba(0,0,0,0.5); --shadow-hover: 0 20px 30px -10px rgba(0,0,0,0.8);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* ✅ الهيدر: العنوان في النص + زر البحث */
         .main-header { display: flex; justify-content: center; align-items: center; padding: 15px 25px; background: var(--accent); color: var(--accent-text); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .header-content { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 800px; }
         .main-header h1 { font-size: 22px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 800; }
@@ -179,9 +182,6 @@
             <div class="subject-card" onclick="openEmbedded('test.html', '📝 اختبر نفسك (الاختبار الشامل)')">
                 <h2>📝 اختبر نفسك (الاختبار الشامل)</h2><span class="arrow">⬅️</span>
             </div>
-            <div class="subject-card" onclick="window.location.href='money.html'">
-                 <h2>📈 المنصة المالية (محاكي التداول)</h2><span class="arrow">⬅️</span>
-            </div>
         </div>
 
         <!-- ✅ هنا مكان الإعلان اللي هيظهر تحت آخر مستطيل -->
@@ -199,6 +199,8 @@
             <a href="tel:01024897145" class="footer-contact-btn">
                 <span>📞</span> ساهر للتواصل: 01024897145
             </a>
+            <!-- ✅ لينك التداول الجديد -->
+            <a href="money.html" style="display: block; margin-top: 15px; font-size: 13px; color: #3b82f6; text-decoration: underline; cursor: pointer;">اضغط للتداول 📈</a>
         </footer>
     </div>
 
@@ -257,25 +259,28 @@
                 <button class="account-action-btn logout" onclick="confirmLogout()">🚪 تسجيل الخروج</button>
             </div>
         </div>
-	</div>
-	<div id="adminLoginModal" class="modal">
-    <div class="modal-content">
-        <h3>🔐 أدخل كود المدير</h3>
-        <input type="password" id="adminCodeInput" placeholder="الكود السري" maxlength="20">
-        <div class="modal-buttons">
-            <button class="btn-primary" onclick="checkAdminCode()">دخول</button>
-            <button class="btn-secondary" onclick="closeModal('adminLoginModal')">إلغاء</button>
+    </div>
+
+    <!-- المودالات -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <h3>🔐 أدخل كود المدير</h3>
+            <input type="password" id="adminCodeInput" placeholder="الكود السري" maxlength="20">
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="checkAdminCode()">دخول</button>
+                <button class="btn-secondary" onclick="closeModal('adminLoginModal')">إلغاء</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="addContentModal" class="modal">
-    <div class="modal-content">
-        <h3>➕ إضافة محتوى</h3>
-        <label>العنوان:</label>
-        <input type="text" id="addTitle" placeholder="اكتب عنوان المحتوى هنا...">
-        <label>النص (اختياري):</label>
-        <textarea id="addText" rows="3" placeholder="اكتب النص هنا..."></textarea>
+    <div id="addContentModal" class="modal">
+        <div class="modal-content">
+            <h3>➕ إضافة محتوى</h3>
+            <label>العنوان:</label>
+            <input type="text" id="addTitle" placeholder="اكتب عنوان المحتوى هنا...">
+            <label>النص (اختياري):</label>
+            <textarea id="addText" rows="3" plac
+				        <textarea id="addText" rows="3" placeholder="اكتب النص هنا..."></textarea>
         <label>رابط المحتوى (اختياري):</label>
         <input type="text" id="addUrl" placeholder="https://...">
         <div class="modal-buttons">
@@ -300,7 +305,8 @@
         </div>
     </div>
 </div>
-    <script type="module">
+
+	    <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
@@ -316,6 +322,10 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // ✅ رجعنا الصوت
+    const clickSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3");
+    clickSound.volume = 0.4;
+
     window.addNotification = async function(title, message, type = 'info', icon = '🔔') {
         try { await addDoc(collection(db, "notifications"), { title, message, type, icon, createdAt: Date.now() }); } catch(e) {}
     };
@@ -327,22 +337,14 @@
     let editingItemId = null;
     let currentUser = null;
 
-    // ✅ مفيش حفظ في المتصفح خالص، بنستخدم window.name
+    // ✅ مفيش حفظ في المتصفح، بنستخدم window.name
     function checkUserSession() {
         const userStr = window.name; 
-        if (!userStr) {
-            document.getElementById('userBar').style.display = 'none';
-            return; 
-        }
+        if (!userStr) { return; }
         try {
             currentUser = JSON.parse(userStr);
-            document.getElementById('userBar').style.display = 'flex';
-            document.getElementById('welcomeText').innerHTML = '👤 ' + currentUser.username;
-            if (currentUser.role === 'admin') {
-                document.getElementById('adminBadge').style.display = 'inline-block';
-                isAdmin = true; 
-            }
-        } catch(e) { document.getElementById('userBar').style.display = 'none'; }
+            if (currentUser.role === 'admin') { isAdmin = true; }
+        } catch(e) { }
     }
 
     window.confirmLogout = function() {
@@ -352,11 +354,8 @@
         }
     };
 
-    window.toggleTheme = function() {
-        document.body.classList.toggle('dark');
-    };
-
     window.toggleSearch = function() {
+        clickSound.play().catch(e => console.log("الصوت اتمنع"));
         const searchPage = document.getElementById('page-search');
         if (searchPage.classList.contains('active')) { showPage('home'); } else { showPage('search'); }
     };
@@ -367,11 +366,8 @@
         const mainHeader = document.getElementById('mainHeader');
         if (pageId === 'home' || pageId === 'search' || pageId === 'profile' || pageId === 'about') {
             mainHeader.style.display = 'flex';
-            const hasUser = window.name; 
-            document.getElementById('userBar').style.display = hasUser ? 'flex' : 'none';
         } else {
             mainHeader.style.display = 'none';
-            document.getElementById('userBar').style.display = 'none';
         }
         if (pageId === 'search') {
             document.getElementById('searchInput').value = '';
@@ -386,12 +382,14 @@
     };
 
     window.openEmbedded = function(fileName, title) {
+        clickSound.play().catch(e => console.log("الصوت اتمنع"));
         const frame = document.getElementById('embeddedFrame');
         frame.src = fileName; 
         showPage('embedded');
     };
 
     window.openSubject = function(subjectId, title) {
+        clickSound.play().catch(e => console.log("الصوت اتمنع"));
         currentSubject = subjectId;
         document.getElementById('currentSubjectTitle').textContent = title;
         showPage('subject');
@@ -529,4 +527,4 @@
     document.addEventListener('DOMContentLoaded', () => { checkUserSession(); });
     </script>
 </body>
-</html>
+</html>			
