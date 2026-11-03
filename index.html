@@ -13,19 +13,21 @@
     <meta name="google-site-verification" content="GAenrCsmmww2VcvqNYmXKVQdK8if9xp-OM_VnxMnObc" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المنصة التعليمية لتانية بكالوريا ساهر</title>
+    
+    <!-- ✅ تحسين محركات البحث (SEO) -->
+    <title>منصة البكالوريا ساهر | كتب الامتحان، الأضواء، جيم، المعاصر - تانيه ثانوي</title>
+    <meta name="description" content="منصة تعليمية مجانية لطلاب تانية بكالوريا. جميع كتب الامتحان، الأضواء، جيم، والمعاصر، ومواعيد تنزيل الكتب، شرح المواد، وامتحانات تفاعلية.">
+    <meta name="keywords" content="تانيه بكالوريا, تانية ثانوي, منصة البكالوريا, ساهر, كتاب الامتحان, كتاب الأضواء, كتاب جيم, كتاب المعاصر, مواعيد تنزيل الكتب, شرح عربي, شرح برمجة, شرح انجليزي, شرح تاريخ">
     
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="manifest" href="manifest.json">
-    
-    <meta name="description" content="منصة تعليمية مجانية لطلاب البكالوريا. شرح مواد العربي، البرمجة، الإنجليزي، التاريخ، ومنصة جافا سكريبت للتعلم مجاناً.">
-    <meta name="author" content="ساهر">
+    <meta name="theme-color" content="#4f46e5">
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #f8fafc; --text: #0f172a; 
-            --card: #e2e8f0; /* ✅ أبيض غامق شويه */
+            --card: #e2e8f0;
             --accent: #4f46e5; --accent-text: #ffffff; --border: #cbd5e1; 
             --danger: #ef4444; --success: #10b981; --muted: #64748b;
             --shadow: 0 10px 25px -5px rgba(0,0,0,0.05); --shadow-hover: 0 20px 30px -10px rgba(0,0,0,0.1);
@@ -40,13 +42,15 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; min-height: 100vh; display: flex; flex-direction: column; }
 
+        /* ✅ الهيدر: زر البحث الأول ثم العنوان */
         .main-header { display: flex; justify-content: center; align-items: center; padding: 15px 25px; background: var(--accent); color: var(--accent-text); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .header-content { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 800px; }
-        .main-header h1 { font-size: 22px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 800; }
-        .header-actions { display: flex; gap: 10px; }
-
+        
+        .header-right { display: flex; align-items: center; gap: 10px; }
         .header-btn { background: rgba(255,255,255,0.15); border: none; color: #fff; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
         .header-btn:hover { background: rgba(255,255,255,0.3); }
+
+        .main-header h1 { font-size: 22px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 800; }
 
         .page { display: none; flex: 1; flex-direction: column; }
         .page.active { display: flex; animation: fadeIn 0.4s ease-out; }
@@ -146,60 +150,39 @@
 <body>
     <header class="main-header" id="mainHeader">
         <div class="header-content">
-            <h1 onclick="showPage('home')">🎓 منصة البكالوريا</h1>
-            <div class="header-actions">
+            <div class="header-right">
                 <button class="header-btn" onclick="toggleSearch()">🔍 بحث</button>
             </div>
+            <!-- ✅ العنوان للضغط 10 مرات للمدير -->
+            <h1 onclick="adminClick()" id="mainTitle">🎓 منصة البكالوريا</h1>
         </div>
     </header>
 
     <div id="page-home" class="page active">
         <div class="home-hero">
             <h2>مرحباً بك في منصة البكالوريا 🚀</h2>
-            <p>بوابتك الشاملة لجميع المواد الدراسية. ابدأ رحلة التفوق والتميز الآن مع أفضل الشروحات والملخصات التعليمية، كل ما تحتاجه في مكان واحد!</p>
+            <!-- ✅ تغيير النص هنا -->
+            <p>بوابتك الشاملة لجميع الكتب والمواد الدراسية. ابدأ رحلة التفوق والتميز الآن مع أفضل الشروحات والملخصات التعليمية، كل ما تحتاجه في مكان واحد!</p>
             <span class="learn-more-link" onclick="window.location.href='about.html'">تعلم أكثر عن المنصة ←</span>
         </div>
 
         <div class="sections-container">
-            <div class="subject-card" onclick="openEmbedded('Arabic.html', '📖 مادة العربي')">
-                <h2>📖 مادة العربي</h2><span class="arrow">⬅️</span>
-            </div>
-            <div class="subject-card" onclick="openEmbedded('programming.html', '💻 مادة البرمجة')">
-                <h2>💻 مادة البرمجة</h2><span class="arrow">⬅️</span>
-            </div>
-            <div class="subject-card" onclick="openEmbedded('English.html', '🇬🇧 مادة الإنجليزي')">
-                <h2>🇬🇧 مادة الإنجليزي</h2><span class="arrow">⬅️</span>
-            </div>
-            <div class="subject-card" onclick="openEmbedded('History.html', '🏛️ مادة التاريخ')">
-                <h2>🏛️ مادة التاريخ</h2><span class="arrow">⬅️</span>
-            </div>
-            <div class="subject-card" onclick="openEmbedded('javascript.html', '🚀 منصة جافا سكريبت للتعلم مجاناً')">
-                <h2>🚀 منصة جافا سكريبت للتعلم مجاناً</h2><span class="arrow">⬅️</span>
-            </div>
-            <div class="subject-card" onclick="openSubject('quiz', 'اسئله لجميع المواد')">
-                <h2>اسئله لجميع المواد</h2><span class="arrow">⬅️</span>
-            </div>
-            <div class="subject-card" onclick="openEmbedded('test.html', '📝 اختبر نفسك (الاختبار الشامل)')">
-                <h2>📝 اختبر نفسك (الاختبار الشامل)</h2><span class="arrow">⬅️</span>
-            </div>
+            <div class="subject-card" onclick="openEmbedded('Arabic.html', '📖 مادة العربي')"><h2>📖 مادة العربي</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('programming.html', '💻 مادة البرمجة')"><h2>💻 مادة البرمجة</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('English.html', '🇬🇧 مادة الإنجليزي')"><h2>🇬🇧 مادة الإنجليزي</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('History.html', '🏛️ مادة التاريخ')"><h2>🏛️ مادة التاريخ</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('javascript.html', '🚀 منصة جافا سكريبت للتعلم مجاناً')"><h2>🚀 منصة جافا سكريبت للتعلم مجاناً</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openSubject('quiz', 'اسئله لجميع المواد')"><h2>اسئله لجميع المواد</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('test.html', '📝 اختبر نفسك (الاختبار الشامل)')"><h2>📝 اختبر نفسك (الاختبار الشامل)</h2><span class="arrow">⬅️</span></div>
         </div>
 
-        <!-- ✅ هنا مكان الإعلان اللي هيظهر تحت آخر مستطيل -->
         <div style="text-align: center; margin: 20px auto; max-width: 800px; padding: 0 20px;">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-6033212246748015"
-                 data-ad-slot="3731342857"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6033212246748015" data-ad-slot="3731342857" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
         <footer class="main-footer">
-            <a href="tel:01024897145" class="footer-contact-btn">
-                <span>📞</span> ساهر للتواصل: 01024897145
-            </a>
-            <!-- ✅ لينك التداول الجديد -->
+            <a href="tel:01024897145" class="footer-contact-btn">📞 ساهر للتواصل: 01024897145</a>
             <a href="money.html" style="display: block; margin-top: 15px; font-size: 13px; color: #3b82f6; text-decoration: underline; cursor: pointer;">اضغط للتداول 📈</a>
         </footer>
     </div>
@@ -213,17 +196,12 @@
     </div>
 
     <div id="page-embedded" class="page">
-        <div class="embedded-header">
-            <button class="back-btn-small" onclick="showPage('home')">🔙 رجوع</button>
-        </div>
+        <div class="embedded-header"><button class="back-btn-small" onclick="showPage('home')">🔙 رجوع</button></div>
         <iframe id="embeddedFrame" class="iframe-container" sandbox="allow-scripts allow-forms allow-same-origin allow-modals allow-popups"></iframe>
     </div>
 
     <div id="page-subject" class="page">
-        <div class="page-header">
-            <button class="back-btn" onclick="showPage('home')">🔙 رجوع</button>
-            <h2 class="page-title" id="currentSubjectTitle"></h2>
-        </div>
+        <div class="page-header"><button class="back-btn" onclick="showPage('home')">🔙 رجوع</button><h2 class="page-title" id="currentSubjectTitle"></h2></div>
         <div class="content-area">
             <div id="loadingContent" class="loading">⏳ جارٍ التحميل...</div>
             <div id="subjectContentList" class="content-list"></div>
@@ -232,25 +210,14 @@
     </div>
 
     <div id="page-profile" class="page">
-        <div class="page-header">
-            <button class="back-btn" onclick="showPage('home')">🔙 رجوع</button>
-            <h2 class="page-title">حسابي</h2>
-        </div>
+        <div class="page-header"><button class="back-btn" onclick="showPage('home')">🔙 رجوع</button><h2 class="page-title">حسابي</h2></div>
         <div class="content-area">
             <div class="profile-card">
-                <div class="profile-header">
-                    <div class="profile-avatar">👤</div>
-                    <div class="profile-info">
-                        <h3 id="profileName">اسم الطالب</h3>
-                        <p id="profileRole">طالب</p>
-                    </div>
-                </div>
+                <div class="profile-header"><div class="profile-avatar">👤</div><div class="profile-info"><h3 id="profileName">اسم الطالب</h3><p id="profileRole">طالب</p></div></div>
                 <h3 style="margin-bottom: 10px; font-size: 18px; color: var(--text);">✏️ تغيير البيانات</h3>
                 <div class="profile-form">
-                    <label>الاسم الجديد:</label>
-                    <input type="text" id="newName" placeholder="اكتب الاسم الجديد...">
-                    <label>كلمة المرور الجديدة:</label>
-                    <input type="password" id="newPassword" placeholder="اكتب كلمة المرور الجديدة...">
+                    <label>الاسم الجديد:</label><input type="text" id="newName" placeholder="اكتب الاسم الجديد...">
+                    <label>كلمة المرور الجديدة:</label><input type="password" id="newPassword" placeholder="اكتب كلمة المرور الجديدة...">
                     <button class="btn-primary" onclick="updateProfile()" style="margin-top: 10px; width: 100%; padding: 12px;">💾 حفظ التعديلات</button>
                 </div>
             </div>
@@ -259,161 +226,268 @@
                 <button class="account-action-btn logout" onclick="confirmLogout()">🚪 تسجيل الخروج</button>
             </div>
         </div>
+	</div>
+	<div id="adminLoginModal" class="modal">
+    <div class="modal-content">
+        <h3>🔐 أدخل كود المدير</h3>
+        <input type="password" id="adminCodeInput" placeholder="الكود السري" maxlength="20">
+        <div class="modal-buttons"><button class="btn-primary" onclick="checkAdminCode()">دخول</button><button class="btn-secondary" onclick="closeModal('adminLoginModal')">إلغاء</button></div>
     </div>
+</div>
 
-    <!-- المودالات -->
-    <div id="adminLoginModal" class="modal">
-        <div class="modal-content">
-            <h3>🔐 أدخل كود المدير</h3>
-            <input type="password" id="adminCodeInput" placeholder="الكود السري" maxlength="20">
-            <div class="modal-buttons">
-                <button class="btn-primary" onclick="checkAdminCode()">دخول</button>
-                <button class="btn-secondary" onclick="closeModal('adminLoginModal')">إلغاء</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="addContentModal" class="modal">
-        <div class="modal-content">
-            <h3>➕ إضافة محتوى</h3>
-            <label>العنوان:</label>
-            <input type="text" id="addTitle" placeholder="اكتب عنوان المحتوى هنا...">
-            <label>النص (اختياري):</label>
-            <textarea id="addText" rows="3" plac
-				        <textarea id="addText" rows="3" placeholder="اكتب النص هنا..."></textarea>
-        <label>رابط المحتوى (اختياري):</label>
-        <input type="text" id="addUrl" placeholder="https://...">
-        <div class="modal-buttons">
-            <button class="btn-primary" onclick="saveContent()">💾 حفظ ونشر</button>
-            <button class="btn-secondary" onclick="closeModal('addContentModal')">إلغاء</button>
-        </div>
+<div id="addContentModal" class="modal">
+    <div class="modal-content">
+        <h3>➕ إضافة محتوى</h3>
+        <label>العنوان:</label><input type="text" id="addTitle" placeholder="اكتب عنوان المحتوى هنا...">
+        <label>النص (اختياري):</label><textarea id="addText" rows="3" placeholder="اكتب النص هنا..."></textarea>
+        <label>رابط المحتوى (اختياري):</label><input type="text" id="addUrl" placeholder="https://...">
+        <div class="modal-buttons"><button class="btn-primary" onclick="saveContent()">💾 حفظ ونشر</button><button class="btn-secondary" onclick="closeModal('addContentModal')">إلغاء</button></div>
     </div>
 </div>
 
 <div id="editContentModal" class="modal">
     <div class="modal-content">
         <h3>✏️ تعديل المحتوى</h3>
-        <label>العنوان:</label>
-        <input type="text" id="editTitle">
-        <label>النص:</label>
-        <textarea id="editText" rows="3"></textarea>
-        <label>الرابط:</label>
-        <input type="text" id="editUrl">
-        <div class="modal-buttons">
-            <button class="btn-primary" onclick="saveEditContent()">💾 حفظ التعديل</button>
-            <button class="btn-secondary" onclick="closeModal('editContentModal')">إلغاء</button>
-        </div>
+        <label>العنوان:</label><input type="text" id="editTitle">
+        <label>النص:</label><textarea id="editText" rows="3"></textarea>
+        <label>الرابط:</label><input type="text" id="editUrl">
+        <div class="modal-buttons"><button class="btn-primary" onclick="saveEditContent()">💾 حفظ التعديل</button><button class="btn-secondary" onclick="closeModal('editContentModal')">إلغاء</button></div>
+    </div>
+</div>
+<div id="adminLoginModal" class="modal">
+    <div class="modal-content">
+        <h3>🔐 أدخل كود المدير</h3>
+        <input type="password" id="adminCodeInput" placeholder="الكود السري" maxlength="20">
+        <div class="modal-buttons"><button class="btn-primary" onclick="checkAdminCode()">دخول</button><button class="btn-secondary" onclick="closeModal('adminLoginModal')">إلغاء</button></div>
     </div>
 </div>
 
-	    <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+<div id="addContentModal" class="modal">
+    <div class="modal-content">
+        <h3>➕ إضافة محتوى</h3>
+        <label>العنوان:</label><input type="text" id="addTitle" placeholder="اكتب عنوان المحتوى هنا...">
+        <label>النص (اختياري):</label><textarea id="addText" rows="3" placeholder="اكتب النص هنا..."></textarea>
+        <label>رابط المحتوى (اختياري):</label><input type="text" id="addUrl" placeholder="https://...">
+        <div class="modal-buttons"><button class="btn-primary" onclick="saveContent()">💾 حفظ ونشر</button><button class="btn-secondary" onclick="closeModal('addContentModal')">إلغاء</button></div>
+    </div>
+</div>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDe5INvR_ifEARHmw7M0qqBQ34-G6z4p7w",
-        authDomain: "mansa-educational.firebaseapp.com",
-        projectId: "mansa-educational",
-        storageBucket: "mansa-educational.firebasestorage.app",
-        messagingSenderId: "144298769750",
-        appId: "1:144298769750:web:43eb0c63e5d2acb37baaf7"
-    };
+<div id="editContentModal" class="modal">
+    <div class="modal-content">
+        <h3>✏️ تعديل المحتوى</h3>
+        <label>العنوان:</label><input type="text" id="editTitle">
+        <label>النص:</label><textarea id="editText" rows="3"></textarea>
+        <label>الرابط:</label><input type="text" id="editUrl">
+        <div class="modal-buttons"><button class="btn-primary" onclick="saveEditContent()">💾 حفظ التعديل</button><button class="btn-secondary" onclick="closeModal('editContentModal')">إلغاء</button></div>
+    </div>
+</div>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-    // ✅ رجعنا الصوت
-    const clickSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3");
-    clickSound.volume = 0.4;
+const firebaseConfig = { apiKey: "AIzaSyDe5INvR_ifEARHmw7M0qqBQ34-G6z4p7w", authDomain: "mansa-educational.firebaseapp.com", projectId: "mansa-educational", storageBucket: "mansa-educational.firebasestorage.app", messagingSenderId: "144298769750", appId: "1:144298769750:web:43eb0c63e5d2acb37baaf7" };
 
-    window.addNotification = async function(title, message, type = 'info', icon = '🔔') {
-        try { await addDoc(collection(db, "notifications"), { title, message, type, icon, createdAt: Date.now() }); } catch(e) {}
-    };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const clickSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3");
+clickSound.volume = 0.4;
+
+let isAdmin = false;
+let currentSubject = "";
+let currentItems = [];
+let editingItemId = null;
+let currentUser = null;
+
+// ✅ الدخول كمدير بالضغط 10 مرات
+let adminClickCount = 0;
+let adminClickTimer = null;
+window.adminClick = function() {
+    adminClickCount++;
+    clearTimeout(adminClickTimer);
+    adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
     
-    const SECRET_CODE = "01024897145";
-    let isAdmin = false;
-    let currentSubject = "";
-    let currentItems = [];
-    let editingItemId = null;
-    let currentUser = null;
+    if (adminClickCount >= 10) {
+        adminClickCount = 0;
+        if (isAdmin) {
+            if(confirm('هل تريد الخروج من وضع المدير؟')) { isAdmin = false; alert('تم الخروج.'); }
+        } else {
+            openModal('adminLoginModal');
+        }
+    }
+};
 
-    // ✅ مفيش حفظ في المتصفح، بنستخدم window.name
-    function checkUserSession() {
-        const userStr = window.name; 
-        if (!userStr) { return; }
-        try {
-            currentUser = JSON.parse(userStr);
-            if (currentUser.role === 'admin') { isAdmin = true; }
-        } catch(e) { }
+window.checkAdminCode = function() {
+    const val = document.getElementById('adminCodeInput').value.trim();
+    // ✅ الكود الجديد
+    if (val === "010248971455") {
+        isAdmin = true;
+        closeModal('adminLoginModal');
+        document.getElementById('adminCodeInput').value = '';
+        alert('✅ تم تفعيل وضع المدير');
+    } else {
+        alert('❌ الكود غير صحيح');
+    }
+};
+
+// ✅ مفيش حفظ في المتصفح
+function checkUserSession() {
+    const userStr = window.name; 
+    if (!userStr) { return; }
+    try {
+        currentUser = JSON.parse(userStr);
+        if (currentUser.role === 'admin') { isAdmin = true; }
+    } catch(e) { }
+}
+
+window.confirmLogout = function() {
+    if (confirm("هل تريد تسجيل الخروج؟")) {
+        window.name = ''; 
+        window.location.href = 'login.html';
+    }
+};
+
+// ✅ البحث الشامل (شغال)
+window.performSearch = async function() {
+    clickSound.play().catch(e => {});
+    const term = document.getElementById('searchInput').value.trim().toLowerCase();
+    const resultsDiv = document.getElementById('searchResults');
+
+    if (!term) {
+        resultsDiv.innerHTML = '<p style="text-align:center; color:var(--muted);">ابدأ بكتابة اسم المادة أو الدرس أو المحتوى للبحث...</p>';
+        return;
     }
 
-    window.confirmLogout = function() {
-        if (confirm("هل تريد تسجيل الخروج؟")) {
-            window.name = ''; 
-            window.location.href = 'login.html';
-        }
-    };
+    resultsDiv.innerHTML = '<p style="text-align:center; color:var(--muted);">⏳ جاري البحث...</p>';
 
-    window.toggleSearch = function() {
-        clickSound.play().catch(e => console.log("الصوت اتمنع"));
-        const searchPage = document.getElementById('page-search');
-        if (searchPage.classList.contains('active')) { showPage('home'); } else { showPage('search'); }
-    };
+    let allResults = [];
 
-    window.showPage = function(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('page-' + pageId).classList.add('active');
-        const mainHeader = document.getElementById('mainHeader');
-        if (pageId === 'home' || pageId === 'search' || pageId === 'profile' || pageId === 'about') {
-            mainHeader.style.display = 'flex';
-        } else {
-            mainHeader.style.display = 'none';
-        }
-        if (pageId === 'search') {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('searchResults').innerHTML = '<p style="text-align:center; color:var(--muted);">ابدأ بكتابة اسم المادة أو الدرس أو المحتوى للبحث...</p>';
-            setTimeout(() => document.getElementById('searchInput').focus(), 100);
-        }
-        if (pageId === 'profile') { loadProfilePage(); }
-        if (pageId === 'home') {
-            setTimeout(() => { try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {} }, 500);
-        }
-        window.scrollTo(0, 0);
-    };
+    const subjectsData = [
+        { title: '📖 مادة العربي', file: 'Arabic.html' },
+        { title: '💻 مادة البرمجة', file: 'programming.html' },
+        { title: '🇬🇧 مادة الإنجليزي', file: 'English.html' },
+        { title: '🏛️ مادة التاريخ', file: 'History.html' },
+        { title: '🚀 منصة جافا سكريبت', file: 'javascript.html' },
+        { title: '📝 اختبر نفسك', file: 'test.html' }
+    ];
 
-    window.openEmbedded = function(fileName, title) {
-        clickSound.play().catch(e => console.log("الصوت اتمنع"));
-        const frame = document.getElementById('embeddedFrame');
-        frame.src = fileName; 
-        showPage('embedded');
-    };
+    const subjectMatches = subjectsData.filter(sub => sub.title.toLowerCase().includes(term));
+    subjectMatches.forEach(sub => {
+        allResults.push({ type: 'subject', icon: '📚', title: sub.title, subtitle: 'مادة', action: `openEmbedded('${sub.file}', '${sub.title}')` });
+    });
 
-    window.openSubject = function(subjectId, title) {
-        clickSound.play().catch(e => console.log("الصوت اتمنع"));
-        currentSubject = subjectId;
-        document.getElementById('currentSubjectTitle').textContent = title;
-        showPage('subject');
-        loadSubjectContent();
-    };
+    try {
+        const contentSnap = await getDocs(collection(db, "content"));
+        const allContent = [];
+        contentSnap.forEach(d => allContent.push({ id: d.id, ...d.data() }));
 
-    window.loadSubjectContent = async function() {
-        const list = document.getElementById('subjectContentList');
-        const loader = document.getElementById('loadingContent');
-        list.innerHTML = '';
-        loader.style.display = 'block';
-        try {
-            const q = query(collection(db, "content"), where("subject", "==", currentSubject));
-            const snapshot = await getDocs(q);
-            currentItems = [];
-            snapshot.forEach(doc => { currentItems.push({ id: doc.id, ...doc.data() }); });
-            currentItems.sort((a, b) => a.createdAt - b.createdAt);
-            renderSubjectContent();
-        } catch (e) {
-            list.innerHTML = '<p class="empty-msg" style="color:var(--danger);">حدث خطأ في تحميل البيانات.</p>';
-        } finally { loader.style.display = 'none'; }
-    };
+        const getSubjectName = (s) => ({'arabic':'العربي','english':'الإنجليزي','history':'التاريخ','programming':'البرمجة'}[s] || s);
+        const getSubjectFile = (s) => ({'arabic':'Arabic.html','english':'English.html','history':'History.html','programming':'programming.html'}[s] || 'Arabic.html');
 
-    function getMediaHtml(url, title) {
+        allContent.filter(x => x.kind === 'unit' && x.title.toLowerCase().includes(term)).forEach(u => {
+            allResults.push({ type: 'unit', icon: '📘', title: u.title, subtitle: `وحدة في ${getSubjectName(u.subject)}`, action: `openEmbedded('${getSubjectFile(u.subject)}', '${getSubjectName(u.subject)}')` });
+        });
+
+        allContent.filter(x => x.kind === 'lesson' && x.title.toLowerCase().includes(term)).forEach(l => {
+            const parentUnit = allContent.find(u => u.id === l.parentId);
+            allResults.push({ type: 'lesson', icon: '📝', title: l.title, subtitle: `درس في ${getSubjectName(l.subject)}${parentUnit ? ' — ' + parentUnit.title : ''}`, action: `openEmbedded('${getSubjectFile(l.subject)}', '${getSubjectName(l.subject)}')` });
+        });
+
+        allContent.filter(x => x.kind === 'item' && (x.title.toLowerCase().includes(term) || (x.text && x.text.toLowerCase().includes(term)))).forEach(it => {
+            const parentLesson = allContent.find(l => l.id === it.parentId);
+            allResults.push({ type: 'item', icon: '🔹', title: it.title, subtitle: `محتوى في ${getSubjectName(it.subject)}${parentLesson ? ' — ' + parentLesson.title : ''}`, action: `openEmbedded('${getSubjectFile(it.subject)}', '${getSubjectName(it.subject)}')` });
+        });
+
+        const examsSnap = await getDocs(collection(db, "exams"));
+        examsSnap.forEach(d => {
+            const exam = d.data();
+            if (exam.title && exam.title.toLowerCase().includes(term)) {
+                allResults.push({ type: 'exam', icon: '📝', title: exam.title, subtitle: `امتحان في ${getSubjectName(exam.subject)}`, action: `openEmbedded('test.html', 'اختبر نفسك')` });
+            }
+        });
+    } catch (e) { console.error('Search error:', e); }
+
+    if (allResults.length === 0) {
+        resultsDiv.innerHTML = '<p style="text-align:center; color:var(--danger); font-weight:bold;">❌ لا توجد نتائج</p>';
+        return;
+    }
+
+    const groups = { subject: { label: '📚 المواد', items: [] }, unit: { label: '📘 الوحدات', items: [] }, lesson: { label: '📝 الدروس', items: [] }, item: { label: '🔹 المحتوى', items: [] }, exam: { label: '📝 الامتحانات', items: [] } };
+    allResults.forEach(r => groups[r.type].items.push(r));
+
+    let html = `<p style="text-align:center; color:var(--muted); margin-bottom:15px;">تم العثور على ${allResults.length} نتيجة</p>`;
+
+    Object.keys(groups).forEach(key => {
+        const g = groups[key];
+        if (g.items.length === 0) return;
+        html += `<h3 style="color:var(--accent); font-size:16px; margin:15px 0 8px;">${g.label} (${g.items.length})</h3>`;
+        html += g.items.map(item => `
+            <div class="subject-card" onclick="${item.action}" style="padding:15px 20px;">
+                <div><h2 style="font-size:17px;">${item.icon} ${item.title}</h2><p style="font-size:13px; color:var(--muted); margin-top:4px;">${item.subtitle}</p></div>
+                <span class="arrow" style="width:40px; height:40px; font-size:20px;">⬅️</span>
+            </div>
+        `).join('');
+    });
+
+    resultsDiv.innerHTML = html;
+};
+
+window.toggleSearch = function() {
+    clickSound.play().catch(e => {});
+    const searchPage = document.getElementById('page-search');
+    if (searchPage.classList.contains('active')) { showPage('home'); } else { showPage('search'); }
+};
+
+window.showPage = function(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + pageId).classList.add('active');
+    const mainHeader = document.getElementById('mainHeader');
+    if (pageId === 'home' || pageId === 'search' || pageId === 'profile') { mainHeader.style.display = 'flex'; } 
+    else { mainHeader.style.display = 'none'; }
+    
+    if (pageId === 'search') {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('searchResults').innerHTML = '<p style="text-align:center; color:var(--muted);">ابدأ بكتابة اسم المادة أو الدرس أو المحتوى للبحث...</p>';
+        setTimeout(() => document.getElementById('searchInput').focus(), 100);
+    }
+    if (pageId === 'profile') { loadProfilePage(); }
+    if (pageId === 'home') { setTimeout(() => { try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {} }, 500); }
+    window.scrollTo(0, 0);
+};
+
+window.openEmbedded = function(fileName, title) {
+    clickSound.play().catch(e => {});
+    const frame = document.getElementById('embeddedFrame');
+    frame.src = fileName; 
+    showPage('embedded');
+};
+
+window.openSubject = function(subjectId, title) {
+    clickSound.play().catch(e => {});
+    currentSubject = subjectId;
+    document.getElementById('currentSubjectTitle').textContent = title;
+    showPage('subject');
+    loadSubjectContent();
+};
+
+window.loadSubjectContent = async function() {
+    const list = document.getElementById('subjectContentList');
+    const loader = document.getElementById('loadingContent');
+    list.innerHTML = '';
+    loader.style.display = 'block';
+    try {
+        const q = query(collection(db, "content"), where("subject", "==", currentSubject));
+        const snapshot = await getDocs(q);
+        currentItems = [];
+        snapshot.forEach(doc => { currentItems.push({ id: doc.id, ...doc.data() }); });
+        currentItems.sort((a, b) => a.createdAt - b.createdAt);
+        renderSubjectContent();
+    } catch (e) {
+        list.innerHTML = '<p class="empty-msg" style="color:var(--danger);">حدث خطأ في تحميل البيانات.</p>';
+    } finally { loader.style.display = 'none'; }
+};
+	    function getMediaHtml(url, title) {
         if (!url) return '';
         let u = url.toLowerCase();
         if (!u.includes('.pdf') && !u.includes('drive.google.com') && !u.includes('youtube.com') && !u.includes('youtu.be') && !u.match(/\.(mp4|webm|ogg|mov|mp3|wav|ogg|m4a)$/)) {
@@ -527,4 +601,5 @@
     document.addEventListener('DOMContentLoaded', () => { checkUserSession(); });
     </script>
 </body>
-</html>			
+</html>
+        
