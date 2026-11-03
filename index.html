@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+	
 <head>
 	
 	<script src="https://5gvci.com/act/files/tag.min.js?z=12175409" data-cfasync="false" async></script>    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6033212246748015" crossorigin="anonymous"></script>
@@ -210,6 +211,12 @@
         .about-text ul { padding-right: 20px; margin-bottom: 20px; }
         .about-text li { margin-bottom: 10px; }
     </style>
+	
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#101827">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+	
 </head>
 <body>
     <script>
@@ -1017,6 +1024,16 @@
 
     <!-- ✅ نظام الإشعارات -->
     <script type="module" src="push-notifications.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .catch(error => console.error("Service Worker:", error));
+  });
+}
+</script>
+	
 </body>
 </html>
            
