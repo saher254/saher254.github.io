@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <script src="https://5gvci.com/act/files/tag.min.js?z=12175409" data-cfasync="false" async></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6033212246748015" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6011L0T99F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6011L0T99F');
+    </script>
+    <meta name="google-site-verification" content="GAenrCsmmww2VcvqNYmXKVQdK8if9xp-OM_VnxMnObc" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصة التعليمية لتانية بكالوريا ساهر</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#101827">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <meta name="description" content="منصة تعليمية مجانية لطلاب البكالوريا. شرح مواد العربي، البرمجة، الإنجليزي، التاريخ، ومنصة جافا سكريبت للتعلم مجاناً.">
+    <meta name="author" content="ساهر">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1120; --text: #f8fafc; --card: #1e293b; --accent: #4f46e5;
+            --accent-text: #ffffff; --border: #334155; --danger: #ef4444; --success: #10b981; --muted: #94a3b8;
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.5); --shadow-hover: 0 20px 30px -10px rgba(0,0,0,0.8);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+        .main-header { display: flex; justify-content: center; align-items: center; padding: 15px 25px; background: var(--accent); color: var(--accent-text); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .main-header h1 { font-size: 22px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 800; }
+
+        #userBar { background: #1e293b; color: #fff; padding: 10px 20px; display: none; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 600; border-bottom: 2px solid #4f46e5; }
+        .user-info { display: flex; align-items: center; gap: 10px; }
+        .user-name { 
+            background: rgba(79, 70, 229, 0.15); border: 1px solid rgba(79, 70, 229, 0.4); color: #60a5fa;
+            width: 90px; height: 35px; border-radius: 20px; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; font-size: 13px; font-weight: 700; text-decoration: underline; text-underline-offset: 2px;
+            text-align: center; padding: 0 10px;
+        }
+        .admin-badge { background: #10b981; color: #fff; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        
+        .search-btn-bar {
+            background: rgba(79, 70, 229, 0.15); color: #a5b4fc; border: 1px solid rgba(79, 70, 229, 0.3);
+            padding: 6px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px;
+            display: flex; align-items: center; gap: 5px; transition: 0.2s;
+        }
+        .search-btn-bar:hover { background: rgba(79, 70, 229, 0.3); }
+
+        #loginBtnHeader { display: block; background: #10b981; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin: 15px auto; width: max-content; font-size: 16px; transition: 0.3s; }
+        #loginBtnHeader:hover { background: #059669; }
+
+        .page { display: none; flex: 1; flex-direction: column; }
+        .page.active { display: flex; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .home-hero { text-align: center; margin: 40px auto 20px; padding: 0 20px; }
+        .home-hero h2 { font-size: 32px; font-weight: 900; color: var(--text); margin-bottom: 10px; }
+        .home-hero p { font-size: 16px; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        
+        .learn-more-link { display: inline-block; margin-top: 10px; font-size: 16px; font-weight: bold; color: #3b82f6; cursor: pointer; text-decoration: underline; transition: 0.2s; }
+        .learn-more-link:hover { color: #2563eb; }
+
+        .sections-container { max-width: 800px; margin: 20px auto 30px; padding: 0 20px; display: flex; flex-direction: column; gap: 20px; width: 100%; }
+        
+        .subject-card { background: var(--card); padding: 30px 35px; border-radius: 24px; border: 1px solid var(--border); box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
+        .subject-card::before { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 8px; background: #4f46e5; border-radius: 0 24px 24px 0; }
+        .subject-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: #4f46e5; }
+        .subject-card:active { transform: scale(0.98); }
+        .subject-card h2 { font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 12px; color: var(--text); }
+        .subject-card .arrow { font-size: 26px; color: #4f46e5; transition: 0.3s; background: rgba(79, 70, 229, 0.1); width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; }
+        .subject-card:hover .arrow { transform: translateX(-5px); background: #4f46e5; color: #fff; }
+
+        .embedded-header { display: flex; align-items: center; gap: 10px; padding: 10px 15px; background: var(--card); border-bottom: 1px solid var(--border); }
+        .back-btn-small { background: var(--border); border: none; color: var(--text); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; transition: 0.2s; }
+        .back-btn-small:hover { background: #4f46e5; color: #fff; }
+        .iframe-container { width: 100%; height: calc(100vh - 100px); border: none; flex: 1; background: var(--card); }
+
+        .page-header { max-width: 800px; margin: 30px auto 0; padding: 0 20px; display: flex; align-items: center; gap: 15px; }
+        .back-btn { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 10px 20px; border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 700; transition: 0.3s; box-shadow: var(--shadow); }
+        .back-btn:hover { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+        .page-title { font-size: 26px; color: var(--text); font-weight: 800; }
+
+        .content-area { max-width: 800px; margin: 25px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 20px; width: 100%; }
+        
+        .profile-card { background: var(--card); padding: 25px; border-radius: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; }
+        .profile-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .profile-avatar { width: 60px; height: 60px; background: var(--accent); color: #fff; border-radius: 50%; display: grid; place-items: center; font-size: 30px; }
+        .profile-info h3 { font-size: 22px; color: var(--text); margin-bottom: 5px; }
+        .profile-info p { font-size: 14px; color: var(--muted); }
+        .profile-form { display: flex; flex-direction: column; gap: 10px; }
+        
+        input { padding: 14px 16px; border-radius: 12px; border: 2px solid var(--border); background: var(--bg); color: var(--text); font-size: 15px; outline: none; }
+
+        .account-action-btn { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid var(--border); background: var(--card); color: var(--text); font-weight: 700; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; transition: 0.2s; }
+        .account-action-btn.logout { border: none; background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; justify-content: center; }
+
+        .main-footer { text-align: center; padding: 20px; background: var(--card); border-top: 1px solid var(--border); margin-top: auto; min-height: 120px; display: flex; flex-direction: column; justify-content: flex-end; }
+        .footer-contact-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--text); text-decoration: none; padding: 8px 20px; border-radius: 50px; background: var(--bg); border: 1px solid var(--border); }
+        
+        .btn-primary { background: #4f46e5; color: #fff; border: none; cursor: pointer; font-weight: bold; }
+        .btn-secondary { background: var(--border); color: var(--text); border: none; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header class="main-header" id="mainHeader">
+        <h1 onclick="showPage('home')">🎓 منصة البكالوريا</h1>
+    </header>
+
+    <button id="loginBtnHeader" onclick="window.location.href='login.html'">🔑 تسجيل الدخول</button>
+
+    <div id="userBar">
+        <div class="user-info">
+            <span id="welcomeText" class="user-name" onclick="showPage('profile')">👤 أهلاً بك</span>
+            <span id="adminBadge" class="admin-badge" style="display:none;">مدير</span>
+        </div>
+        <button class="search-btn-bar" onclick="toggleSearch()">🔍 بحث</button>
+    </div>
+
+    <div id="page-home" class="page active">
+        <div class="home-hero">
+            <h2>مرحباً بك في منصة البكالوريا 🚀</h2>
+            <p>بوابتك الشاملة لجميع المواد الدراسية. ابدأ رحلة التفوق والتميز الآن!</p>
+            <span class="learn-more-link" onclick="window.location.href='about.html'">تعلم أكثر عن المنصة ←</span>
+        </div>
+
+        <div class="sections-container">
+            <div class="subject-card" onclick="openEmbedded('Arabic.html', '📖 مادة العربي')"><h2>📖 مادة العربي</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('programming.html', '💻 مادة البرمجة')"><h2>💻 مادة البرمجة</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('English.html', '🇬🇧 مادة الإنجليزي')"><h2>🇬🇧 مادة الإنجليزي</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('History.html', '🏛️ مادة التاريخ')"><h2>🏛️ مادة التاريخ</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('javascript.html', '🚀 منصة جافا سكريبت للتعلم مجاناً')"><h2>🚀 منصة جافا سكريبت للتعلم مجاناً</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="openEmbedded('test.html', '📝 اختبر نفسك')"><h2>📝 اختبر نفسك (الاختبار الشامل)</h2><span class="arrow">⬅️</span></div>
+            <div class="subject-card" onclick="window.location.href='money.html'"><h2>📈 المنصة المالية (محاكي التداول)</h2><span class="arrow">⬅️</span></div>
+        </div>
+
+        <div style="text-align: center; margin: 0 auto 20px; max-width: 800px; padding: 0 20px;">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6033212246748015" data-ad-slot="3731342857" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+
+        <footer class="main-footer">
+            <a href="tel:01024897145" class="footer-contact-btn">📞 ساهر للتواصل: 01024897145</a>
+        </footer>
+    </div>
+
+    <div id="page-search" class="page">
+        <div style="max-width: 800px; margin: 30px auto; padding: 0 20px; width: 100%;">
+            <h2 style="text-align:center; color:var(--text); margin-bottom:20px;">🔍 البحث</h2>
+            <input type="text" id="searchInput" placeholder="ابحث..." oninput="performSearch()" style="width:100%; padding:15px; border-radius:16px; border:2px solid var(--border); background:var(--card); color:var(--text);">
+            <div id="searchResults" style="margin-top:25px; display:flex; flex-direction:column; gap:15px;"></div>
+        </div>
+    </div>
+
+    <div id="page-embedded" class="page">
+        <div class="embedded-header"><button class="back-btn-small" onclick="showPage('home')">🔙 رجوع</button></div>
+        <iframe id="embeddedFrame" class="iframe-container" sandbox="allow-scripts allow-forms allow-same-origin allow-modals allow-popups"></iframe>
+    </div>
+
+    <div id="page-profile" class="page">
+        <div class="page-header"><button class="back-btn" onclick="showPage('home')">🔙 رجوع</button><h2 class="page-title">حسابي</h2></div>
+        <div class="content-area">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar">👤</div>
+                    <div class="profile-info"><h3 id="profileName">اسم الطالب</h3><p id="profileRole">طالب</p></div>
+                </div>
+                <h3 style="margin-bottom: 10px;">✏️ تغيير البيانات</h3>
+                <div class="profile-form">
+                    <input type="text" id="newName" placeholder="الاسم الجديد...">
+                    <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة...">
+                    <button class="btn-primary" onclick="updateProfile()" style="padding: 12px; border-radius: 10px; margin-top: 10px;">💾 حفظ التعديلات</button>
+                </div>
+            </div>
+            <div class="profile-card">
+                <h3 style="margin-bottom: 15px;">⚙️ إعدادات الحساب</h3>
+                <button class="account-action-btn logout" onclick="confirmLogout()">🚪 تسجيل الخروج</button>
+            </div>
+        </div>
+	</div>
+	    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDe5INvR_ifEARHmw7M0qqBQ34-G6z4p7w",
+            authDomain: "mansa-educational.firebaseapp.com",
+            projectId: "mansa-educational",
+            storageBucket: "mansa-educational.firebasestorage.app",
+            messagingSenderId: "144298769750",
+            appId: "1:144298769750:web:43eb0c63e5d2acb37baaf7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        let isAdmin = false;
+        let currentUser = null;
+
+        const subjectsData = [
+            { title: '📖 مادة العربي', file: 'Arabic.html' },
+            { title: '💻 مادة البرمجة', file: 'programming.html' },
+            { title: '🇬🇧 مادة الإنجليزي', file: 'English.html' },
+            { title: '🏛️ مادة التاريخ', file: 'History.html' },
+            { title: '🚀 منصة جافا سكريبت', file: 'javascript.html' },
+            { title: '📝 اختبر نفسك', file: 'test.html' }
+        ];
+
+        window.performSearch = function() {
+            const term = document.getElementById('searchInput').value.trim().toLowerCase();
+            const resultsDiv = document.getElementById('searchResults');
+            if (!term) { resultsDiv.innerHTML = '<p style="text-align:center; color:var(--muted);">ابدأ بالبحث...</p>'; return; }
+            const matches = subjectsData.filter(sub => sub.title.toLowerCase().includes(term));
+            resultsDiv.innerHTML = matches.map(sub => `
+                <div class="subject-card" onclick="openEmbedded('${sub.file}', '${sub.title}')">
+                    <h2>${sub.title}</h2><span class="arrow">⬅️</span>
+                </div>
+            `).join('');
+        };
+
+        window.toggleSearch = function() {
+            const searchPage = document.getElementById('page-search');
+            if (searchPage.classList.contains('active')) { showPage('home'); } else { showPage('search'); }
+        };
+
+        // ✅ مفيش أي حفظ في المتصفح، بنستخدم window.name
+        function checkUserSession() {
+            const loginBtn = document.getElementById('loginBtnHeader');
+            const userStr = window.name; 
+
+            if (!userStr) {
+                document.getElementById('userBar').style.display = 'none';
+                if (loginBtn) loginBtn.style.display = 'block'; 
+                return; 
+            }
+            
+            try {
+                currentUser = JSON.parse(userStr);
+                if (loginBtn) loginBtn.style.display = 'none'; 
+                document.getElementById('userBar').style.display = 'flex';
+                document.getElementById('welcomeText').innerHTML = '👤 ' + currentUser.username;
+
+                if (currentUser.role === 'admin') {
+                    document.getElementById('adminBadge').style.display = 'inline-block';
+                    isAdmin = true; 
+                }
+            } catch(e) {
+                document.getElementById('userBar').style.display = 'none';
+                if (loginBtn) loginBtn.style.display = 'block'; 
+            }
+        }
+
+        window.confirmLogout = function() {
+            if (confirm("هل تريد تسجيل الخروج؟")) {
+                window.name = ''; 
+                window.location.href = 'login.html';
+            }
+        };
+
+        window.showPage = function(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            const mainHeader = document.getElementById('mainHeader');
+            if (pageId === 'home' || pageId === 'search' || pageId === 'profile') {
+                mainHeader.style.display = 'flex';
+                const hasUser = window.name; 
+                document.getElementById('userBar').style.display = hasUser ? 'flex' : 'none';
+                document.getElementById('loginBtnHeader').style.display = hasUser ? 'none' : 'block';
+            } else {
+                mainHeader.style.display = 'none';
+                document.getElementById('userBar').style.display = 'none';
+                document.getElementById('loginBtnHeader').style.display = 'none';
+            }
+            window.scrollTo(0, 0);
+        };
+
+        window.openEmbedded = function(fileName, title) {
+            const frame = document.getElementById('embeddedFrame');
+            frame.src = fileName; 
+            showPage('embedded');
+        };
+
+        async function loadProfilePage() {
+            if (!currentUser) return;
+            document.getElementById('profileName').textContent = currentUser.username;
+            document.getElementById('profileRole').textContent = currentUser.role === 'admin' ? 'مدير المنصة' : 'طالب';
+            document.getElementById('newName').value = currentUser.username;
+            document.getElementById('newPassword').value = '';
+        }
+
+        window.updateProfile = async function() {
+            if (!currentUser) return alert("سجل دخول أولاً!");
+            const newName = document.getElementById('newName').value.trim();
+            const newPassword = document.getElementById('newPassword').value.trim();
+            if (!newName) return alert("الاسم لا يمكن أن يكون فارغاً!");
+            
+            try {
+                const userRef = doc(db, "students", currentUser.id);
+                const updateData = { username: newName };
+                if (newPassword) updateData.password = newPassword;
+                await updateDoc(userRef, updateData);
+                
+                currentUser.username = newName;
+                window.name = JSON.stringify(currentUser); 
+                
+                document.getElementById('welcomeText').innerHTML = '👤 ' + newName;
+                document.getElementById('profileName').textContent = newName;
+                document.getElementById('newPassword').value = '';
+                alert("✅ تم تحديث البيانات بنجاح!");
+            } catch (e) {
+                alert("❌ حدث خطأ: " + e.message);
+            }
+        };
+
+        window.openModal = function(id) { document.getElementById(id).classList.add('active'); };
+        window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); };
+
+        document.addEventListener('DOMContentLoaded', () => { 
+            checkUserSession(); 
+        });
+    </script>
+</body>
+</html>
