@@ -14,7 +14,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- ✅ تحسين محركات البحث (SEO) -->
     <title>منصة البكالوريا ساهر | كتب الامتحان، الأضواء، جيم، المعاصر - تانيه ثانوي</title>
     <meta name="description" content="منصة تعليمية مجانية لطلاب تانية بكالوريا. جميع كتب الامتحان، الأضواء، جيم، والمعاصر، ومواعيد تنزيل الكتب، شرح المواد، وامتحانات تفاعلية.">
     <meta name="keywords" content="تانيه بكالوريا, تانية ثانوي, منصة البكالوريا, ساهر, كتاب الامتحان, كتاب الأضواء, كتاب جيم, كتاب المعاصر, مواعيد تنزيل الكتب, شرح عربي, شرح برمجة, شرح انجليزي, شرح تاريخ">
@@ -42,15 +41,19 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* ✅ الهيدر: زر البحث الأول ثم العنوان */
+        /* ✅ الهيدر: العنوان الأول وجنبه زر البحث */
         .main-header { display: flex; justify-content: center; align-items: center; padding: 15px 25px; background: var(--accent); color: var(--accent-text); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .header-content { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 800px; }
         
-        .header-right { display: flex; align-items: center; gap: 10px; }
+        /* ✅ منع النسخ من العنوان */
+        .main-header h1 { 
+            font-size: 22px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 800;
+            user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
+        }
+
+        .header-actions { display: flex; gap: 10px; }
         .header-btn { background: rgba(255,255,255,0.15); border: none; color: #fff; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
         .header-btn:hover { background: rgba(255,255,255,0.3); }
-
-        .main-header h1 { font-size: 22px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 800; }
 
         .page { display: none; flex: 1; flex-direction: column; }
         .page.active { display: flex; animation: fadeIn 0.4s ease-out; }
@@ -153,7 +156,6 @@
             <div class="header-right">
                 <button class="header-btn" onclick="toggleSearch()">🔍 بحث</button>
             </div>
-            <!-- ✅ العنوان للضغط 10 مرات للمدير -->
             <h1 onclick="adminClick()" id="mainTitle">🎓 منصة البكالوريا</h1>
         </div>
     </header>
@@ -161,7 +163,6 @@
     <div id="page-home" class="page active">
         <div class="home-hero">
             <h2>مرحباً بك في منصة البكالوريا 🚀</h2>
-            <!-- ✅ تغيير النص هنا -->
             <p>بوابتك الشاملة لجميع الكتب والمواد الدراسية. ابدأ رحلة التفوق والتميز الآن مع أفضل الشروحات والملخصات التعليمية، كل ما تحتاجه في مكان واحد!</p>
             <span class="learn-more-link" onclick="window.location.href='about.html'">تعلم أكثر عن المنصة ←</span>
         </div>
@@ -226,35 +227,8 @@
                 <button class="account-action-btn logout" onclick="confirmLogout()">🚪 تسجيل الخروج</button>
             </div>
         </div>
-	</div>
-	<div id="adminLoginModal" class="modal">
-    <div class="modal-content">
-        <h3>🔐 أدخل كود المدير</h3>
-        <input type="password" id="adminCodeInput" placeholder="الكود السري" maxlength="20">
-        <div class="modal-buttons"><button class="btn-primary" onclick="checkAdminCode()">دخول</button><button class="btn-secondary" onclick="closeModal('adminLoginModal')">إلغاء</button></div>
-    </div>
-</div>
-
-<div id="addContentModal" class="modal">
-    <div class="modal-content">
-        <h3>➕ إضافة محتوى</h3>
-        <label>العنوان:</label><input type="text" id="addTitle" placeholder="اكتب عنوان المحتوى هنا...">
-        <label>النص (اختياري):</label><textarea id="addText" rows="3" placeholder="اكتب النص هنا..."></textarea>
-        <label>رابط المحتوى (اختياري):</label><input type="text" id="addUrl" placeholder="https://...">
-        <div class="modal-buttons"><button class="btn-primary" onclick="saveContent()">💾 حفظ ونشر</button><button class="btn-secondary" onclick="closeModal('addContentModal')">إلغاء</button></div>
-    </div>
-</div>
-
-<div id="editContentModal" class="modal">
-    <div class="modal-content">
-        <h3>✏️ تعديل المحتوى</h3>
-        <label>العنوان:</label><input type="text" id="editTitle">
-        <label>النص:</label><textarea id="editText" rows="3"></textarea>
-        <label>الرابط:</label><input type="text" id="editUrl">
-        <div class="modal-buttons"><button class="btn-primary" onclick="saveEditContent()">💾 حفظ التعديل</button><button class="btn-secondary" onclick="closeModal('editContentModal')">إلغاء</button></div>
-    </div>
-</div>
-<div id="adminLoginModal" class="modal">
+																				   </div>
+		<div id="adminLoginModal" class="modal">
     <div class="modal-content">
         <h3>🔐 أدخل كود المدير</h3>
         <input type="password" id="adminCodeInput" placeholder="الكود السري" maxlength="20">
@@ -286,7 +260,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-const firebaseConfig = { apiKey: "AIzaSyDe5INvR_ifEARHmw7M0qqBQ34-G6z4p7w", authDomain: "mansa-educational.firebaseapp.com", projectId: "mansa-educational", storageBucket: "mansa-educational.firebasestorage.app", messagingSenderId: "144298769750", appId: "1:144298769750:web:43eb0c63e5d2acb37baaf7" };
+const firebaseConfig = {
+    apiKey: "AIzaSyDe5INvR_ifEARHmw7M0qqBQ34-G6z4p7w",
+    authDomain: "mansa-educational.firebaseapp.com",
+    projectId: "mansa-educational",
+    storageBucket: "mansa-educational.firebasestorage.app",
+    messagingSenderId: "144298769750",
+    appId: "1:144298769750:web:43eb0c63e5d2acb37baaf7"
+};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -300,7 +281,6 @@ let currentItems = [];
 let editingItemId = null;
 let currentUser = null;
 
-// ✅ الدخول كمدير بالضغط 10 مرات
 let adminClickCount = 0;
 let adminClickTimer = null;
 window.adminClick = function() {
@@ -320,7 +300,6 @@ window.adminClick = function() {
 
 window.checkAdminCode = function() {
     const val = document.getElementById('adminCodeInput').value.trim();
-    // ✅ الكود الجديد
     if (val === "010248971455") {
         isAdmin = true;
         closeModal('adminLoginModal');
@@ -331,7 +310,6 @@ window.checkAdminCode = function() {
     }
 };
 
-// ✅ مفيش حفظ في المتصفح
 function checkUserSession() {
     const userStr = window.name; 
     if (!userStr) { return; }
@@ -346,91 +324,6 @@ window.confirmLogout = function() {
         window.name = ''; 
         window.location.href = 'login.html';
     }
-};
-
-// ✅ البحث الشامل (شغال)
-window.performSearch = async function() {
-    clickSound.play().catch(e => {});
-    const term = document.getElementById('searchInput').value.trim().toLowerCase();
-    const resultsDiv = document.getElementById('searchResults');
-
-    if (!term) {
-        resultsDiv.innerHTML = '<p style="text-align:center; color:var(--muted);">ابدأ بكتابة اسم المادة أو الدرس أو المحتوى للبحث...</p>';
-        return;
-    }
-
-    resultsDiv.innerHTML = '<p style="text-align:center; color:var(--muted);">⏳ جاري البحث...</p>';
-
-    let allResults = [];
-
-    const subjectsData = [
-        { title: '📖 مادة العربي', file: 'Arabic.html' },
-        { title: '💻 مادة البرمجة', file: 'programming.html' },
-        { title: '🇬🇧 مادة الإنجليزي', file: 'English.html' },
-        { title: '🏛️ مادة التاريخ', file: 'History.html' },
-        { title: '🚀 منصة جافا سكريبت', file: 'javascript.html' },
-        { title: '📝 اختبر نفسك', file: 'test.html' }
-    ];
-
-    const subjectMatches = subjectsData.filter(sub => sub.title.toLowerCase().includes(term));
-    subjectMatches.forEach(sub => {
-        allResults.push({ type: 'subject', icon: '📚', title: sub.title, subtitle: 'مادة', action: `openEmbedded('${sub.file}', '${sub.title}')` });
-    });
-
-    try {
-        const contentSnap = await getDocs(collection(db, "content"));
-        const allContent = [];
-        contentSnap.forEach(d => allContent.push({ id: d.id, ...d.data() }));
-
-        const getSubjectName = (s) => ({'arabic':'العربي','english':'الإنجليزي','history':'التاريخ','programming':'البرمجة'}[s] || s);
-        const getSubjectFile = (s) => ({'arabic':'Arabic.html','english':'English.html','history':'History.html','programming':'programming.html'}[s] || 'Arabic.html');
-
-        allContent.filter(x => x.kind === 'unit' && x.title.toLowerCase().includes(term)).forEach(u => {
-            allResults.push({ type: 'unit', icon: '📘', title: u.title, subtitle: `وحدة في ${getSubjectName(u.subject)}`, action: `openEmbedded('${getSubjectFile(u.subject)}', '${getSubjectName(u.subject)}')` });
-        });
-
-        allContent.filter(x => x.kind === 'lesson' && x.title.toLowerCase().includes(term)).forEach(l => {
-            const parentUnit = allContent.find(u => u.id === l.parentId);
-            allResults.push({ type: 'lesson', icon: '📝', title: l.title, subtitle: `درس في ${getSubjectName(l.subject)}${parentUnit ? ' — ' + parentUnit.title : ''}`, action: `openEmbedded('${getSubjectFile(l.subject)}', '${getSubjectName(l.subject)}')` });
-        });
-
-        allContent.filter(x => x.kind === 'item' && (x.title.toLowerCase().includes(term) || (x.text && x.text.toLowerCase().includes(term)))).forEach(it => {
-            const parentLesson = allContent.find(l => l.id === it.parentId);
-            allResults.push({ type: 'item', icon: '🔹', title: it.title, subtitle: `محتوى في ${getSubjectName(it.subject)}${parentLesson ? ' — ' + parentLesson.title : ''}`, action: `openEmbedded('${getSubjectFile(it.subject)}', '${getSubjectName(it.subject)}')` });
-        });
-
-        const examsSnap = await getDocs(collection(db, "exams"));
-        examsSnap.forEach(d => {
-            const exam = d.data();
-            if (exam.title && exam.title.toLowerCase().includes(term)) {
-                allResults.push({ type: 'exam', icon: '📝', title: exam.title, subtitle: `امتحان في ${getSubjectName(exam.subject)}`, action: `openEmbedded('test.html', 'اختبر نفسك')` });
-            }
-        });
-    } catch (e) { console.error('Search error:', e); }
-
-    if (allResults.length === 0) {
-        resultsDiv.innerHTML = '<p style="text-align:center; color:var(--danger); font-weight:bold;">❌ لا توجد نتائج</p>';
-        return;
-    }
-
-    const groups = { subject: { label: '📚 المواد', items: [] }, unit: { label: '📘 الوحدات', items: [] }, lesson: { label: '📝 الدروس', items: [] }, item: { label: '🔹 المحتوى', items: [] }, exam: { label: '📝 الامتحانات', items: [] } };
-    allResults.forEach(r => groups[r.type].items.push(r));
-
-    let html = `<p style="text-align:center; color:var(--muted); margin-bottom:15px;">تم العثور على ${allResults.length} نتيجة</p>`;
-
-    Object.keys(groups).forEach(key => {
-        const g = groups[key];
-        if (g.items.length === 0) return;
-        html += `<h3 style="color:var(--accent); font-size:16px; margin:15px 0 8px;">${g.label} (${g.items.length})</h3>`;
-        html += g.items.map(item => `
-            <div class="subject-card" onclick="${item.action}" style="padding:15px 20px;">
-                <div><h2 style="font-size:17px;">${item.icon} ${item.title}</h2><p style="font-size:13px; color:var(--muted); margin-top:4px;">${item.subtitle}</p></div>
-                <span class="arrow" style="width:40px; height:40px; font-size:20px;">⬅️</span>
-            </div>
-        `).join('');
-    });
-
-    resultsDiv.innerHTML = html;
 };
 
 window.toggleSearch = function() {
@@ -602,4 +495,3 @@ window.loadSubjectContent = async function() {
     </script>
 </body>
 </html>
-        
