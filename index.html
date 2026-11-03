@@ -43,8 +43,7 @@
 
         /* ✅ الهيدر: العنوان الأول وجنبه زر البحث */
         .main-header { display: flex; justify-content: center; align-items: center; padding: 15px 25px; background: var(--accent); color: var(--accent-text); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        .header-content { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 800px; }
-        
+        .header-content { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 800px; flex-direction: row-reverse; }
         /* ✅ منع النسخ من العنوان */
         .main-header h1 { 
             font-size: 22px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 800;
@@ -151,14 +150,16 @@
     </style>
 </head>
 <body>
-    <header class="main-header" id="mainHeader">
-        <div class="header-content">
-            <div class="header-right">
-                <button class="header-btn" onclick="toggleSearch()">🔍 بحث</button>
-            </div>
-            <h1 onclick="adminClick()" id="mainTitle">🎓 منصة البكالوريا</h1>
+<header class="main-header" id="mainHeader">
+    <div class="header-content">
+        <!-- ✅ زرار البحث على اليمين -->
+        <div class="header-actions">
+            <button class="header-btn" onclick="toggleSearch()">🔍 بحث</button>
         </div>
-    </header>
+        <!-- ✅ العنوان في النص/الشمال -->
+        <h1 onclick="adminClick()" id="mainTitle">🎓 منصة البكالوريا</h1>
+    </div>
+</header>
 
     <div id="page-home" class="page active">
         <div class="home-hero">
