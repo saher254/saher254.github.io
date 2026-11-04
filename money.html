@@ -467,22 +467,26 @@ async function loadNewsFromDB() {
     } catch (e) { console.error(e); }
 }
 
-async function init() {
-    await loadNewsFromDB();
+// ✅ طلب الاسم فقط من غير تسجيل دخول
+let savedName = null;
+if (window.name) {
+    try { savedName = JSON.parse(window.name).username; } catch(e) {}
+}
 
-    let user = null;
-    try { user = JSON.parse(localStorage.getItem('bakaloria_user')); } catch(e) {}
-    if (!user) {
-        alert("يجب تسجيل الدخول في المنصة أولاً!");
-        window.location.href = 'login.html';
-        return;
+if (!savedName) {
+    let enteredName = prompt("أهلاً بك في محاكي التداول! 🚀\nاكتب اسمك عشان يظهر في لوحة الصدارة:");
+    if (!enteredName || enteredName.trim() === '') {
+        enteredName = "مستخدم " + Math.floor(Math.random() * 1000);
     }
+    savedName = enteredName.trim();
+    window.name = JSON.stringify({ username: savedName, role: 'student' });
+}
 
-    userId = user.id;
-    playerName = user.username;
-    isAdmin = user.role === 'admin';
-    document.getElementById('headerName').textContent = playerName;
-
+userId = "guest_" + savedName.replace(/\s/g, '_');
+playerName = savedName;
+isAdmin = false; 
+document.getElementById('headerName').textContent = playerName;
+        
     const soundBtn = document.getElementById('soundToggle');
     soundBtn.textContent = soundEnabled ? '🔊' : '🔇';
     soundBtn.classList.toggle('muted', !soundEnabled);
