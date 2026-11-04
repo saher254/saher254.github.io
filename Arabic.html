@@ -20,7 +20,6 @@
 
     .container { max-width: 900px; margin: 20px auto; padding: 0 15px; width: 100%; }
 
-    /* لوحة التحكم */
     .admin-panel { border: 2px solid #4f46e5; background: rgba(79, 70, 229, 0.05); border-radius: 20px; padding: 20px; margin-bottom: 25px; }
     .admin-panel h2 { font-size: 18px; color: #4f46e5; margin-bottom: 10px; }
     .admin-panel h3 { font-size: 15px; color: #4f46e5; margin: 15px 0 5px; }
@@ -32,7 +31,6 @@
     .btn-small { padding: 5px 10px; font-size: 12px; }
     .hidden { display: none !important; }
 
-    /* 🌟 تصميم المستطيلات (الكروت) زي اسئله لجميع المواد */
     .sections-container { display: flex; flex-direction: column; gap: 15px; width: 100%; }
     
     .subject-card { background: var(--card); padding: 20px 25px; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; text-decoration: none; color: var(--text); }
@@ -93,7 +91,7 @@
         </div>
 
     </div>
-        <script type="module">
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
@@ -108,11 +106,22 @@
 
         const app = initializeApp(firebaseConfig, "arabicBooksApp");
         const db = getFirestore(app);
-        const booksRef = collection(db, "content"); // هنستخدم نفس القاعدة
+        const booksRef = collection(db, "content");
 
-        if (localStorage.getItem('bakaloria_theme') === 'dark') { document.body.classList.add('dark'); }
+        // ✅ استخدام window.name بدل localStorage
+        if (window.name && window.name.includes('bakaloria_theme')) {
+            // لو فيه ثيم محفوظ، بس إحنا مش محتاجينه هنا لأننا هنستخدم الوضع الليلي دايماً
+        }
 
-        let isAdmin = localStorage.getItem('bakaloria_admin') === 'true';
+        // ✅ منع الحفظ في المتصفح، استخدام window.name
+        let isAdmin = false;
+        if (window.name) {
+            try {
+                const user = JSON.parse(window.name);
+                if (user.role === 'admin') isAdmin = true;
+            } catch(e) {}
+        }
+
         if (isAdmin) document.getElementById('adminPanel').classList.remove('hidden');
 
         let currentTerm = null;
@@ -136,7 +145,6 @@
                     createdAt: Date.now()
                 });
                 
-                // إشعار
                 await addDoc(collection(db, "notifications"), {
                     title: "📚 كتاب جديد",
                     message: `تمت إضافة كتاب "${title}" لمادة العربي`,
@@ -148,11 +156,10 @@
                 document.getElementById('bookTitle').value = "";
                 document.getElementById('bookUrl').value = "";
                 alert("✅ تم إضافة الكتاب بنجاح");
-                if (currentTerm) renderBooks(currentTerm); // تحديث لو إحنا جوه شاشة الكتب
+                if (currentTerm) renderBooks(currentTerm);
             } catch (e) { alert("خطأ: " + e.message); }
         });
 
-        // ✅ فتح الترم
         window.openTerm = function(term) {
             currentTerm = term;
             const title = term === 'term1' ? '📘 كتب الترم الأول' : '📙 كتب الترم الثاني';
@@ -163,7 +170,6 @@
             window.scrollTo(0, 0);
         };
 
-        // ✅ الرجوع للترمات
         window.showTermsPage = function() {
             currentTerm = null;
             document.getElementById('page-books').style.display = 'none';
@@ -171,7 +177,6 @@
             window.scrollTo(0, 0);
         };
 
-        // ✅ عرض الكتب
         async function renderBooks(term) {
             const container = document.getElementById('booksContainer');
             container.innerHTML = '<div class="empty-msg">⏳ جاري التحميل...</div>';
@@ -194,7 +199,6 @@
                     const card = document.createElement('div');
                     card.className = 'subject-card';
                     
-                    // زرار الحذف للمدير
                     let adminBtn = isAdmin ? `<button class="btn-danger btn-small" style="margin-left:10px;" onclick="event.stopPropagation(); deleteBook('${book.id}')">🗑️</button>` : '';
 
                     card.innerHTML = `
@@ -205,7 +209,6 @@
                         </div>
                     `;
                     
-                    // لما يدوس على الكتاب، يفتح الرابط في تاب جديد عشان يحمل أو يعرض
                     card.onclick = () => window.open(book.url, '_blank');
                     
                     container.appendChild(card);
@@ -216,7 +219,6 @@
             }
         }
 
-        // ✅ حذف كتاب
         window.deleteBook = async function(id) {
             if (!isAdmin) return;
             if (!confirm('هل أنت متأكد من حذف هذا الكتاب؟')) return;
