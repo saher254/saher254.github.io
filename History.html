@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <script>(function(s){s.dataset.zone='12175486',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    <script src="https://5gvci.com/act/files/tag.min.js?z=12175409" data-cfasync="false" async></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>مادة التاريخ | منصة البكالوريا</title>
@@ -22,7 +20,6 @@
 
     .container { max-width: 900px; margin: 20px auto; padding: 0 15px; width: 100%; }
 
-    /* لوحة التحكم */
     .admin-panel { border: 2px solid #4f46e5; background: rgba(79, 70, 229, 0.05); border-radius: 20px; padding: 20px; margin-bottom: 25px; }
     .admin-panel h2 { font-size: 18px; color: #4f46e5; margin-bottom: 10px; }
     .admin-panel h3 { font-size: 15px; color: #4f46e5; margin: 15px 0 5px; }
@@ -34,7 +31,6 @@
     .btn-small { padding: 5px 10px; font-size: 12px; }
     .hidden { display: none !important; }
 
-    /* 🌟 تصميم المستطيلات */
     .sections-container { display: flex; flex-direction: column; gap: 15px; width: 100%; }
     
     .subject-card { background: var(--card); padding: 20px 25px; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; text-decoration: none; color: var(--text); }
@@ -45,7 +41,6 @@
     .subject-card .arrow { font-size: 22px; color: #4f46e5; transition: 0.3s; background: rgba(79, 70, 229, 0.1); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
     .subject-card:hover .arrow { transform: translateX(-5px); background: #4f46e5; color: #fff; }
 
-    /* 🌟 ستايل الكتب الجديد (فيه زرار تحميل تحت) */
     .book-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow); }
     .book-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
     .book-title { font-size: 18px; font-weight: 800; color: var(--text); }
@@ -68,7 +63,6 @@
 <body>
     <div class="container">
         
-        <!-- لوحة التحكم -->
         <section id="adminPanel" class="admin-panel hidden">
             <h2>🛠️ لوحة تحكم المدير (التاريخ)</h2>
             <h3>إضافة كتاب / مذكرة جديدة</h3>
@@ -81,7 +75,6 @@
             <button id="addBookBtn" class="btn-primary" style="width:100%;">💾 إضافة الكتاب</button>
         </section>
 
-        <!-- 🌟 شاشة الترمات -->
         <div id="page-terms" class="sections-container">
             <h2 class="page-title">🏛️ مادة التاريخ</h2>
             <div class="subject-card" onclick="openTerm('term1')">
@@ -92,9 +85,19 @@
                 <h2>📙 الترم الثاني</h2>
                 <span class="arrow">⬅️</span>
             </div>
+            
+            <!-- ✅ إعلان جوجل أدسنس -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6033212246748015"
+                 data-ad-slot="3731342857"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
 
-        <!-- 🌟 شاشة الكتب -->
         <div id="page-books" style="display: none;">
             <button class="back-btn" onclick="showTermsPage()">🔙 رجوع للترمات</button>
             <h2 id="currentTermTitle" class="page-title" style="font-size: 22px;"></h2>
@@ -120,14 +123,19 @@
         const db = getFirestore(app);
         const booksRef = collection(db, "content");
 
-        if (localStorage.getItem('bakaloria_theme') === 'dark') { document.body.classList.add('dark'); }
+        // ✅ مفيش حفظ في المتصفح، بنستخدم window.name
+        let isAdmin = false;
+        if (window.name) {
+            try {
+                const user = JSON.parse(window.name);
+                if (user.role === 'admin') isAdmin = true;
+            } catch(e) {}
+        }
 
-        let isAdmin = localStorage.getItem('bakaloria_admin') === 'true';
         if (isAdmin) document.getElementById('adminPanel').classList.remove('hidden');
 
         let currentTerm = null;
 
-        // ✅ إضافة كتاب
         document.getElementById('addBookBtn').addEventListener('click', async () => {
             if (!isAdmin) return alert("سجل دخول كمدير أولاً.");
             const term = document.getElementById('bookTerm').value;
@@ -161,7 +169,6 @@
             } catch (e) { alert("خطأ: " + e.message); }
         });
 
-        // ✅ فتح الترم
         window.openTerm = function(term) {
             currentTerm = term;
             const title = term === 'term1' ? '📘 كتب الترم الأول' : '📙 كتب الترم الثاني';
@@ -172,7 +179,6 @@
             window.scrollTo(0, 0);
         };
 
-        // ✅ الرجوع للترمات
         window.showTermsPage = function() {
             currentTerm = null;
             document.getElementById('page-books').style.display = 'none';
@@ -180,7 +186,6 @@
             window.scrollTo(0, 0);
         };
 
-        // ✅ عرض الكتب (مع زرار التحميل تحت)
         async function renderBooks(term) {
             const container = document.getElementById('booksContainer');
             container.innerHTML = '<div class="empty-msg">⏳ جاري التحميل...</div>';
@@ -200,7 +205,6 @@
 
                 container.innerHTML = '';
                 books.forEach(book => {
-                    // تحويل رابط جوجل درايف لرابط تحميل مباشر
                     let finalUrl = book.url;
                     if (finalUrl.includes('drive.google.com')) {
                         let fileId = finalUrl.includes('/file/d/') ? finalUrl.split('/file/d/')[1].split('/')[0] : finalUrl.split('id=')[1]?.split('&')[0];
@@ -228,7 +232,6 @@
             }
         }
 
-        // ✅ حذف كتاب
         window.deleteBook = async function(id) {
             if (!isAdmin) return;
             if (!confirm('هل أنت متأكد من حذف هذا الكتاب؟')) return;
@@ -239,5 +242,5 @@
         };
 
     </script>
-    </body>
+</body>
 </html>
