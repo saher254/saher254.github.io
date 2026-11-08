@@ -348,6 +348,98 @@ window.showPage = function(pageId) {
     if (pageId === 'home') { setTimeout(() => { try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {} }, 500); }
     window.scrollTo(0, 0);
 };
+	// ✅ دالة البحث الشاملة
+window.performSearch = async function() {
+    const term = document.getElementById('searchInput').value.trim().toLowerCase();
+    const resultsDiv = document.getElementById('searchResults');
+
+    if (!term) {
+        resultsDiv.innerHTML = '<p style="text-align:center; color:var(--muted);">ابدأ بكتابة اسم المادة أو الدرس أو المحتوى للبحث...</p>';
+        return;
+    }
+
+    resultsDiv.innerHTML = '<p style="text-align:center; color:var(--muted);">⏳ جاري البحث...</p>';
+
+    let allResults = [];
+
+    const subjectsData = [
+        { title: '📖 مادة العربي', file: 'Arabic.html' },
+        { title: '💻 مادة البرمجة', file: 'programming.html' },
+        { title: '🇬🇧 مادة الإنجليزي', file: 'English.html' },
+        { title: '🏛️ مادة التاريخ', file: 'History.html' },
+        { title: '🚀 منصة جافا سكريبت', file: 'javascript.html' },
+        { title: '📝 اختبر نفسك', file: 'test.html' }
+    ];
+
+    const subjectMatches = subjectsData.filter(sub => sub.title.toLowerCase().includes(term));
+    subjectMatches.forEach(sub => {
+        allResults.push({ type: 'subject', icon: '📚', title: sub.title, subtitle: 'مادة', action: `openEmbedded('${sub.file}', '${sub.title}')` });
+    });
+
+    try {
+        const contentSnap = await getDocs(collection(db, "content"));
+        const allContent = [];
+        contentSnap.forEach(d => allContent.push({ id: d.id, ...d.data() }));
+
+        const getSubjectName = (s) => ({'arabic':'العربي','english':'الإنجليزي','history':'التاريخ','programming':'البرمجة'}[s] || s);
+        const getSubjectFile = (s) => ({'arabic':'Arabic.html','english':'English.html','history':'History.html','programming':'programming.html'}[s] || 'Arabic.html');
+
+        // الوحدات
+        allContent.filter(x => x.kind === 'unit' && x.title.toLowerCase().includes(term)).forEach(u => {
+            allResults.push({ type: 'unit', icon: '📘', title: u.title, subtitle: `وحدة في ${getSubjectName(u.subject)}`, action: `openEmbedded('${getSubjectFile(u.subject)}', '${getSubjectName(u.subject)}')` });
+        });
+
+        // الدروس
+        allContent.filter(x => x.kind === 'lesson' && x.title.toLowerCase().includes(term)).forEach(l => {
+            const parentUnit = allContent.find(u => u.id === l.parentId);
+            allResults.push({ type: 'lesson', icon: '📝', title: l.title, subtitle: `درس في ${getSubjectName(l.subject)}${parentUnit ? ' — ' + parentUnit.title : ''}`, action: `openEmbedded('${getSubjectFile(l.subject)}', '${getSubjectName(l.subject)}')` });
+        });
+
+        // الكتب والمحتوى
+        allContent.filter(x => x.kind === 'book' && x.title.toLowerCase().includes(term)).forEach(b => {
+            allResults.push({ type: 'book', icon: '📚', title: b.title, subtitle: `كتاب في ${getSubjectName(b.subject)}`, action: `openEmbedded('${getSubjectFile(b.subject)}', '${getSubjectName(b.subject)}')` });
+        });
+
+        allContent.filter(x => x.kind === 'item' && (x.title.toLowerCase().includes(term) || (x.text && x.text.toLowerCase().includes(term)))).forEach(it => {
+            const parentLesson = allContent.find(l => l.id === it.parentId);
+            allResults.push({ type: 'item', icon: '🔹', title: it.title, subtitle: `محتوى في ${getSubjectName(it.subject)}${parentLesson ? ' — ' + parentLesson.title : ''}`, action: `openEmbedded('${getSubjectFile(it.subject)}', '${getSubjectName(it.subject)}')` });
+        });
+
+        // الامتحانات
+        const examsSnap = await getDocs(collection(db, "exams"));
+        examsSnap.forEach(d => {
+            const exam = d.data();
+            if (exam.title && exam.title.toLowerCase().includes(term)) {
+                allResults.push({ type: 'exam', icon: '📝', title: exam.title, subtitle: `امتحان في ${getSubjectName(exam.subject)}`, action: `openEmbedded('test.html', 'اختبر نفسك')` });
+            }
+        });
+
+    } catch (e) { console.error('Search error:', e); }
+
+    if (allResults.length === 0) {
+        resultsDiv.innerHTML = '<p style="text-align:center; color:var(--danger); font-weight:bold;">❌ لا توجد نتائج</p>';
+        return;
+    }
+
+    const groups = { subject: { label: '📚 المواد', items: [] }, unit: { label: '📘 الوحدات', items: [] }, lesson: { label: '📝 الدروس', items: [] }, book: { label: '📚 الكتب', items: [] }, item: { label: '🔹 المحتوى', items: [] }, exam: { label: '📝 الامتحانات', items: [] } };
+    allResults.forEach(r => groups[r.type].items.push(r));
+
+    let html = `<p style="text-align:center; color:var(--muted); margin-bottom:15px;">تم العثور على ${allResults.length} نتيجة</p>`;
+
+    Object.keys(groups).forEach(key => {
+        const g = groups[key];
+        if (g.items.length === 0) return;
+        html += `<h3 style="color:var(--accent); font-size:16px; margin:15px 0 8px;">${g.label} (${g.items.length})</h3>`;
+        html += g.items.map(item => `
+            <div class="subject-card" onclick="${item.action}" style="padding:15px 20px;">
+                <div><h2 style="font-size:17px;">${item.icon} ${item.title}</h2><p style="font-size:13px; color:var(--muted); margin-top:4px;">${item.subtitle}</p></div>
+                <span class="arrow" style="width:40px; height:40px; font-size:20px;">⬅️</span>
+            </div>
+        `).join('');
+    });
+
+    resultsDiv.innerHTML = html;
+};
 
 window.openEmbedded = function(fileName, title) {
     clickSound.play().catch(e => {});
