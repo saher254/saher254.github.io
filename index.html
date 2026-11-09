@@ -586,7 +586,7 @@ window.loadSubjectContent = async function() {
     document.addEventListener('DOMContentLoaded', () => { checkUserSession(); });
     </script>
 	<!-- ========================================== -->
-<!-- ======== ساهر AI - الأيقونة العائمة ======== -->
+<!-- ======== ساهر AI - الأيقونة الذكية ========= -->
 <!-- ========================================== -->
 
 <!-- الأيقونة -->
@@ -598,51 +598,53 @@ window.loadSubjectContent = async function() {
 <style>
     #saher-float-icon {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        bottom: 30px;
+        right: 30px;
         width: 70px;
         height: 70px;
-        border-radius: 20px;
+        border-radius: 50%; /* شكل دائري أنعم */
         cursor: grab;
         z-index: 99999;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        border: 3px solid rgba(255, 255, 255, 0.8); /* إطار أبيض شفاف */
+        transition: transform 0.3s ease, box-shadow 0.3s ease, left 0.3s ease, right 0.3s ease; /* حركة ناعمة عند التثبيت */
         user-select: none;
         -webkit-user-select: none;
         touch-action: none; /* عشان السحب على الموبايل */
+        background: #fff;
     }
 
     #saher-float-icon:active {
         cursor: grabbing;
-        transform: scale(0.95);
+        transform: scale(1.1);
     }
 
     #saher-float-icon img {
         width: 100%;
         height: 100%;
-        border-radius: 20px;
+        border-radius: 50%;
         object-fit: cover;
         pointer-events: none;
     }
 
+    /* للموبايل */
     @media (max-width: 600px) {
         #saher-float-icon {
             width: 60px;
             height: 60px;
-            bottom: 15px;
-            right: 15px;
+            bottom: 20px;
         }
     }
 </style>
 
-<!-- الكود البرمجي للسحب والفتح -->
+<!-- الكود البرمجي للسحب والذكاء -->
 <script>
     const icon = document.getElementById('saher-float-icon');
     let isDragging = false;
     let hasDragged = false;
     let startX, startY, initialX, initialY;
 
-    // بداية السحب
+    // 1. بداية السحب
     icon.addEventListener('pointerdown', (e) => {
         isDragging = true;
         hasDragged = false;
@@ -653,11 +655,11 @@ window.loadSubjectContent = async function() {
         initialX = rect.left;
         initialY = rect.top;
 
-        icon.style.transition = 'none';
+        icon.style.transition = 'none'; // إلغاء الأنيميشن أثناء السحب
         icon.setPointerCapture(e.pointerId);
     });
 
-    // حركة السحب
+    // 2. حركة السحب
     icon.addEventListener('pointermove', (e) => {
         if (!isDragging) return;
         hasDragged = true;
@@ -680,21 +682,46 @@ window.loadSubjectContent = async function() {
         icon.style.bottom = 'auto';
     });
 
-    // نهاية السحب
+    // 3. نهاية السحب (هنا بيحصل السحر: بتثبت على أقرب حافة)
     icon.addEventListener('pointerup', () => {
         isDragging = false;
-        icon.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+        icon.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease, left 0.4s ease, right 0.4s ease, bottom 0.4s ease, top 0.4s ease';
+        
+        const screenWidth = window.innerWidth;
+        const iconCenter = icon.getBoundingClientRect().left + (icon.offsetWidth / 2);
+        
+        // لو النص اللي هي فيه أقرب للشمال، بتلزق في الشمال. لو أقرب لليمين، بتلزق في اليمين.
+        if (iconCenter < screenWidth / 2) {
+            // تثبيت على الشمال
+            icon.style.left = '20px';
+            icon.style.right = 'auto';
+        } else {
+            // تثبيت على اليمين
+            icon.style.right = '20px';
+            icon.style.left = 'auto';
+        }
+        
+        // نرجع التحكم في الارتفاع (عشان تفضل في المكان اللي وقفت فيه فوق أو تحت)
+        const currentTop = icon.getBoundingClientRect().top;
+        icon.style.top = currentTop + 'px';
+        icon.style.bottom = 'auto';
+        
+        // لو كانت قريبة جداً من تحت، نرجعها تنزل شوية
+        if (currentTop > window.innerHeight - 100) {
+            icon.style.top = 'auto';
+            icon.style.bottom = '30px';
+        }
     });
 
-    // الفتح
+    // 4. الفتح (لو مكنش سحب)
     icon.addEventListener('click', () => {
         if (hasDragged) {
             hasDragged = false; 
             return; 
         }
-        // هنا غيرنا المسار ليفتح ملف saher.html مباشرة
-        window.open('saher.html', '_blank'); 
+        window.open('saher.html', '_blank'); // بيفتح ملف ساهر
     });
+</script>
 </script>
 </body>
 </html>
