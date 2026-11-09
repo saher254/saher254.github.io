@@ -585,5 +585,116 @@ window.loadSubjectContent = async function() {
 
     document.addEventListener('DOMContentLoaded', () => { checkUserSession(); });
     </script>
+	<!-- ========================================== -->
+<!-- ======== ساهر AI - الأيقونة العائمة ======== -->
+<!-- ========================================== -->
+
+<!-- الأيقونة -->
+<div id="saher-float-icon">
+    <img src="saher-icon.png" alt="ساهر AI" />
+</div>
+
+<!-- التصميم -->
+<style>
+    #saher-float-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        cursor: grab;
+        z-index: 99999;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: none; /* عشان السحب على الموبايل */
+    }
+
+    #saher-float-icon:active {
+        cursor: grabbing;
+        transform: scale(0.95);
+    }
+
+    #saher-float-icon img {
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        object-fit: cover;
+        pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+        #saher-float-icon {
+            width: 60px;
+            height: 60px;
+            bottom: 15px;
+            right: 15px;
+        }
+    }
+</style>
+
+<!-- الكود البرمجي للسحب والفتح -->
+<script>
+    const icon = document.getElementById('saher-float-icon');
+    let isDragging = false;
+    let hasDragged = false;
+    let startX, startY, initialX, initialY;
+
+    // بداية السحب
+    icon.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        hasDragged = false;
+        startX = e.clientX;
+        startY = e.clientY;
+        
+        const rect = icon.getBoundingClientRect();
+        initialX = rect.left;
+        initialY = rect.top;
+
+        icon.style.transition = 'none';
+        icon.setPointerCapture(e.pointerId);
+    });
+
+    // حركة السحب
+    icon.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        hasDragged = true;
+        
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        
+        let newX = initialX + dx;
+        let newY = initialY + dy;
+
+        // نمنع الأيقونة تطلع بره الشاشة
+        const maxX = window.innerWidth - icon.offsetWidth;
+        const maxY = window.innerHeight - icon.offsetHeight;
+        newX = Math.max(0, Math.min(newX, maxX));
+        newY = Math.max(0, Math.min(newY, maxY));
+
+        icon.style.left = newX + 'px';
+        icon.style.top = newY + 'px';
+        icon.style.right = 'auto';
+        icon.style.bottom = 'auto';
+    });
+
+    // نهاية السحب
+    icon.addEventListener('pointerup', () => {
+        isDragging = false;
+        icon.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+    });
+
+    // الفتح
+    icon.addEventListener('click', () => {
+        if (hasDragged) {
+            hasDragged = false; 
+            return; 
+        }
+        // هنا غيرنا المسار ليفتح ملف saher.html مباشرة
+        window.open('saher.html', '_blank'); 
+    });
+</script>
 </body>
 </html>
